@@ -73,3 +73,29 @@ def user_profile(request):
         'profile' : profile,
     }
     return render(request, 'userApp/user_profile.html', context)
+
+@login_required(login_url='/user/login')
+def user_update(request):
+    slider = Slider.objects.get(default=True)
+
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance= request.user)
+        profile_form = ProfileUpdateForm(request.POST, request.FILES, instance= request.user.userprofile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, "Your Account has been Updated!")
+            return redirect('user_profile')
+        else:
+            messages.success(request, "Username already registered!")
+            return redirect('user_update')
+    else:
+        
+        user_form = UserUpdateForm(instance = request.user)
+        profile_form = ProfileUpdateForm(instance= request.user.userprofile)
+        context ={
+            'slider' : slider,
+            'user_form': user_form,
+            'profile_form': profile_form,
+        }
+        return render(request, 'userApp/userupdate.html', context)

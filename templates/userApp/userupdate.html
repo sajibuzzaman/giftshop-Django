@@ -1,0 +1,123 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|SignIn
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+
+{% block body %}
+{% load crispy_forms_tags %}
+
+<!-- Page Banner Section Start-->
+<div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+    <div class="container">
+        <div class="row">
+
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+                <h1>User Update</h1>
+            </div><!-- Page Title End -->
+
+        </div>
+    </div>
+</div><!-- Page Banner Section End-->
+
+<!-- Begin Login Content Area -->
+
+<div class="contact-section section  pt-120 pb-90">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-3 mb-30">
+                <h1 class="font-weight-bold">User Panel</h1>
+                {% include 'userApp/user_panel.html' %}
+
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-9 col-xs-12">
+                <div class="billing-details">
+                    <div>
+
+                        {% if messages %}
+                        {% for message in messages %}
+                        <div style="color: #d43f3a; font-size: medium">
+                            {{ message|safe }}
+                        </div>
+                        {% endfor %}
+                        {% endif %}
+                    </div>
+                    <h1 class="text-center font-weight-bold">Update your Information</h1>
+                </div>
+
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                   <div class="login-form">
+                                    <h4 class="login-title">Register</h4>
+                                    <div class="row">
+                                        <div class="col-md-12 col-12 mb-20">
+                                            {{ user_form.username|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-12 col-12 mb-20">
+                                            {{ user_form.email|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-6 mb-20">
+                                            {{ user_form.first_name|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-6 mb-20">
+                                            {{ user_form.last_name|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-7 mb-20">
+                                            {{ profile_form.phone|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-6 mb-20">
+                                            {{ profile_form.address|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-6 mb-20">
+                                            {{ profile_form.city|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-6 mb-20">
+                                            {{ profile_form.country|as_crispy_field }}
+                                        </div>
+                                        <div class="col-md-12 mb-20">
+                                            {{ profile_form.image|as_crispy_field }}
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn btn-primary">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Login Content Area End Here -->
+
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

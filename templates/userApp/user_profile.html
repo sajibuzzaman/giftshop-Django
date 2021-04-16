@@ -24,7 +24,6 @@
 
 
 {% block body %}
-{% load crispy_forms_tags %}
 
 <!-- Page Banner Section Start-->
 <div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
@@ -59,11 +58,20 @@
                     </div>
 
                     <div class="col-sm-12 col-md-12 col-lg-9 col-xs-12">
+                        <div>
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}" role="alert">
+                                <strong>{{ message }}</strong>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
                         <h1 class="text-center font-weight-bold">User Details</h1>
                         <table class="shopping-cart-table table">
                             <tr>
                                 <th class="text-left">
-                                    <a href="" class="primary-btn">Update Profile</a>
+                                    <a href="{% url 'user_update' %}" class="primary-btn">Update Profile</a>
                                     &nbsp; &nbsp; &nbsp;
                                     <a href="" class="primary-btn">Change Password</a>
                                 </th>
