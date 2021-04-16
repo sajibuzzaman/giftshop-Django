@@ -6,151 +6,162 @@
 
 {% total_tag as total_amount %}
 
- <!-- Header Section Start -->
-    <div class="header-section section">
-       
-        <!-- Header Top Start -->
-        <div class="header-top">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
+<!-- Header Section Start -->
+<div class="header-section section">
 
-                        <!-- Header Top Wrapper Start -->
-                        <div class="header-top-wrapper">
-                            <div class="row">
+    <!-- Header Top Start -->
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col">
 
-                                <!-- Header Social -->
-                                <div class="header-social col-md-4 col-12">
-                                    <a href="{{ setting.facebook }}" target="_blank"><i class="fa fa-facebook"></i></a>
-                                    <a href="{{ setting.twitter }}" target="_blank"><i class="fa fa-twitter"></i></a>
-                                    <a href="{{ setting.linkedin }}" target="_blank"><i class="fa fa-linkedin"></i></a>
-                                    <a href="{{ setting.instagram }}" target="_blank"><i class="fa fa-instagram"></i></a>
-                                    <a href="{{ setting.pinterest }}" target="_blank"><i class="fa fa-pinterest-p"></i></a>
-                                </div>
+                    <!-- Header Top Wrapper Start -->
+                    <div class="header-top-wrapper">
+                        <div class="row">
 
-                                <!-- Header Logo -->
-                                <div class="header-logo col-md-4 col-12">
-                                    <a href="{% url 'home' %}" class="logo"><img src="{{ setting.logo.url }}" alt="logo"></a>
-                                </div>
-
-                                <!-- Account Menu -->
-                                <div class="account-menu col-md-4 col-12">
-                                    <ul>
-                                        
-                                        {% if user.id is not None %}
-                                            <li><a href="{% url 'user_profile' %}">My Account | {{ user }}</a></li>
-                                            <li><a href="wishlist.html">Wishlist</a></li>
-                                        {% else %}                                     
-                                            <li><a href="{% url 'user_login' %}">Sign In</a></li>
-                                            <li><a href="{% url 'user_signup' %}">Sign Up</a></li>
-                                        {% endif %}
-                                            
-                                       
-                                        <li><a href="#" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i><span class="num">{{ cart_products|length }}</span></a>
-                                            
-                                            <!-- Mini Cart -->
-                                            <div class="mini-cart-brief dropdown-menu text-left">
-                                                <!-- Cart Products -->
-                                                <div class="all-cart-product clearfix">
-                                                    
-                                                    {% for c in cart_products %}
-                                                    <div class="single-cart clearfix">
-                                                        <div class="cart-image">
-                                                            <a href="{% url 'product_details' slug=c.product.slug %}"><img src="{{ c.product.ImageUrl }}" alt=""></a>
-                                                        </div>
-                                                        <div class="cart-info">
-                                                            <h5><a href="{% url 'product_details' slug=c.product.slug %}">{{ c.product.title }}</a></h5>
-                                                            <p>{{ c.quantity }} x {{ c.price }}</p>
-                                                            <a href="{% url 'cart_delete' id=c.id %}" class="cart-delete" title="Remove this item"><i class="fa fa-trash-o"></i></a>
-                                                        </div>
-                                                    </div>
-                                                    {% endfor %}
-                                                        
-                                                 
-                                                   
-                                                </div>
-                                                <!-- Cart Total -->
-                                                <div class="cart-totals">
-                                                    <h5>Total <span>{{ total_amount }}</span></h5>
-                                                </div>
-                                                <!-- Cart Button -->
-                                                <div class="cart-bottom  clearfix" style=" border-style: groove;">
-                                                    <a href="{% url 'cart_details' %}">View Full Cart</a>
-                                                </div>
-                                                <div class="cart-bottom  clearfix" style=" border-style: groove;">
-                                                    <a href="checkout.html">Check out</a>
-                                                </div>
-                                            </div>
-                                            
-                                        </li>
-                                        <li><button class="btn btn-secondary"><a href="{% url 'user_logout' %}">Sign Out</a> </button></li>
-                                    </ul>
-                                </div>
-
+                            <!-- Header Social -->
+                            <div class="header-social col-md-4 col-12">
+                                <a href="{{ setting.facebook }}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                <a href="{{ setting.twitter }}" target="_blank"><i class="fa fa-twitter"></i></a>
+                                <a href="{{ setting.linkedin }}" target="_blank"><i class="fa fa-linkedin"></i></a>
+                                <a href="{{ setting.instagram }}" target="_blank"><i class="fa fa-instagram"></i></a>
+                                <a href="{{ setting.pinterest }}" target="_blank"><i class="fa fa-pinterest-p"></i></a>
                             </div>
-                        </div><!-- Header Top Wrapper End -->
+
+                            <!-- Header Logo -->
+                            <div class="header-logo col-md-4 col-12">
+                                <a href="{% url 'home' %}" class="logo"><img src="{{ setting.logo.url }}"
+                                        alt="logo"></a>
+                            </div>
+
+                            <!-- Account Menu -->
+                            <div class="account-menu col-md-4 col-12">
+                                <ul>
+
+                                    {% if user.id is not None %}
+                                    <li><a href="{% url 'user_profile' %}">My Account</a></li>
+                                    <li><a href="wishlist.html">Wishlist</a></li>
+                                    {% else %}
+                                    <li><a href="{% url 'user_login' %}">Sign In</a></li>
+                                    <li><a href="{% url 'user_signup' %}">Sign Up</a></li>
+                                    {% endif %}
+
+
+                                    <li><a href="#" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i><span
+                                                class="num">{{ cart_products|length }}</span></a>
+
+                                        <!-- Mini Cart -->
+                                        <div class="mini-cart-brief dropdown-menu text-left">
+                                            <!-- Cart Products -->
+                                            <div class="all-cart-product clearfix">
+
+                                                {% for c in cart_products %}
+                                                <div class="single-cart clearfix">
+                                                    <div class="cart-image">
+                                                        <a href="{% url 'product_details' slug=c.product.slug %}"><img
+                                                                src="{{ c.product.ImageUrl }}" alt=""></a>
+                                                    </div>
+                                                    <div class="cart-info">
+                                                        <h5><a
+                                                                href="{% url 'product_details' slug=c.product.slug %}">{{ c.product.title }}</a>
+                                                        </h5>
+                                                        <p>{{ c.quantity }} x {{ c.price }}</p>
+                                                        <a href="{% url 'cart_delete' id=c.id %}" class="cart-delete"
+                                                            title="Remove this item"><i class="fa fa-trash-o"></i></a>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+
+
+
+                                            </div>
+                                            <!-- Cart Total -->
+                                            <div class="cart-totals">
+                                                <h5>Total <span>{{ total_amount }}</span></h5>
+                                            </div>
+                                            <!-- Cart Button -->
+                                            <div class="cart-bottom  clearfix" style=" border-style: groove;">
+                                                <a href="{% url 'cart_details' %}">View Full Cart</a>
+                                            </div>
+                                            <div class="cart-bottom  clearfix" style=" border-style: groove;">
+                                                <a href="checkout.html">Check out</a>
+                                            </div>
+                                        </div>
+
+                                    </li>
+
+                                    {% if user.id is not None %}
+                                    <li><button class="btn btn-secondary"><a href="{% url 'user_logout' %}">Sign Out</a>
+                                        </button></li>
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div><!-- Header Top Wrapper End -->
+
+                </div>
+            </div>
+        </div>
+    </div><!-- Header Top End -->
+
+    <!-- Header Bottom Start -->
+    <div class="header-bottom section">
+        <div class="container">
+            <div class="row">
+
+                <!-- Header Bottom Wrapper Start -->
+                <div class="header-bottom-wrapper text-center col">
+
+                    <!-- Header Bottom Logo -->
+                    <div class="header-bottom-logo">
+                        <a href="{% url 'home' %}" class="logo"><img src="{{ setting.logo.url }}" alt="logo"></a>
+                    </div>
+
+                    <!-- Main Menu -->
+                    <nav id="main-menu" class="main-menu">
+                        <ul>
+                            <li class="active"><a href="{% url 'home' %}">home</a></li>
+                            <li><a href="{% url 'shop' %}">shop</a></li>
+                            <li><a href="shop.html">Categories</a>
+                                <ul class="sub-menu">
+                                    <li><a href="#">Costumes</a></li>
+                                    <li><a href="#">Lights</a></li>
+                                    <li><a href="#">Lights</a></li>
+                                    <li><a href="#">Christmas Trees</a></li>
+                                    <li><a href="#">Decorations</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{% url 'about' %}">about</a></li>
+                            <li><a href="{% url 'blog' %}">blog</a></li>
+                            <li><a href="{% url 'contact' %}">contact</a></li>
+                        </ul>
+                    </nav>
+
+                    <!-- Header Search -->
+                    <div class="header-search">
+
+                        <!-- Search Toggle -->
+                        <button class="search-toggle"><i class="ion-ios-search-strong"></i></button>
+
+                        <!-- Search Form -->
+                        <div class="header-search-form">
+                            <form action="#">
+                                <input type="text" placeholder="Search...">
+                                <button><i class="ion-ios-search-strong"></i></button>
+                            </form>
+                        </div>
 
                     </div>
-                </div>
+
+                    <!-- Mobile Menu -->
+                    <div class="mobile-menu section d-md-none"></div>
+
+                </div><!-- Header Bottom Wrapper End -->
+
             </div>
-        </div><!-- Header Top End -->
-        
-        <!-- Header Bottom Start -->
-        <div class="header-bottom section">
-            <div class="container">
-                <div class="row">
-                   
-                    <!-- Header Bottom Wrapper Start -->
-                    <div class="header-bottom-wrapper text-center col">
+        </div>
+    </div><!-- Header Bottom End -->
 
-                        <!-- Header Bottom Logo -->
-                        <div class="header-bottom-logo">
-                            <a href="{% url 'home' %}" class="logo"><img src="{{ setting.logo.url }}" alt="logo"></a>
-                        </div>
-
-                        <!-- Main Menu -->
-                        <nav id="main-menu" class="main-menu">
-                            <ul>
-                                <li class="active"><a href="{% url 'home' %}">home</a></li>
-                                <li><a href="{% url 'shop' %}">shop</a></li>
-                                <li><a href="shop.html">Categories</a>                             
-                                    <ul class="sub-menu">
-                                        <li><a href="#">Costumes</a></li>
-                                        <li><a href="#">Lights</a></li>
-                                        <li><a href="#">Lights</a></li>
-                                        <li><a href="#">Christmas Trees</a></li>
-                                        <li><a href="#">Decorations</a></li>
-                                    </ul>
-                                </li>  
-                                <li><a href="{% url 'about' %}">about</a></li>
-                                <li><a href="{% url 'blog' %}">blog</a></li>
-                                <li><a href="{% url 'contact' %}">contact</a></li>
-                            </ul>
-                        </nav>
-
-                        <!-- Header Search -->
-                        <div class="header-search">
-                            
-                            <!-- Search Toggle -->
-                            <button class="search-toggle"><i class="ion-ios-search-strong"></i></button>
-                            
-                            <!-- Search Form -->
-                            <div class="header-search-form">
-                                <form action="#">
-                                    <input type="text" placeholder="Search...">
-                                    <button><i class="ion-ios-search-strong"></i></button>
-                                </form>
-                            </div>
-                            
-                        </div>
-                        
-                        <!-- Mobile Menu -->
-                        <div class="mobile-menu section d-md-none"></div>
-
-                    </div><!-- Header Bottom Wrapper End -->
-                    
-                </div>
-            </div>
-        </div><!-- Header Bottom End -->
-        
-    </div><!-- Header Section End -->
+</div><!-- Header Section End -->
