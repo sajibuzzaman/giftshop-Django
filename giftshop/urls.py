@@ -20,6 +20,10 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('', include('giftshopApp.urls')),
+    path('blog/', include('blogApp.urls')),
+    path('shop/', include('shop.urls')),
+    path('order/', include('orderApp.urls')),
+    path('user/', include('userApp.urls')),
     path('admin/', admin.site.urls),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 ]

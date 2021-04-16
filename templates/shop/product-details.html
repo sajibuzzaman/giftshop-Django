@@ -1,0 +1,286 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|Product-Details
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+
+{% block body %}
+
+<!-- Page Banner Section Start-->
+<div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+    <div class="container">
+        <div class="row">
+
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+                <h1>Product details</h1>
+            </div><!-- Page Title End -->
+
+        </div>
+    </div>
+</div><!-- Page Banner Section End-->
+
+
+<!-- Product Section Start-->
+<div class="product-section section pt-110 pb-90">
+    <div class="text-center">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            <strong>{{ message }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="container">
+
+        <!-- Product Wrapper Start-->
+        <div class="row">
+
+            <!-- Product Image & Thumbnail Start -->
+            <div class="col-lg-7 col-12 mb-30">
+
+                <!-- Product Thumbnail -->
+                <div class="single-product-thumbnail product-thumbnail-slider float-left">
+                    <div class="single-thumb"><img src="{{ product.ImageUrl }}" alt="{{ product.title }}"></div>
+
+                    {% for p in images %}
+                    <div class="single-thumb"><img src="{{ p.image.url }}" alt="{{ product.title }}"></div>
+                    {% endfor %}
+
+                </div>
+
+                <!-- Product Image -->
+                <div class="single-product-image product-image-slider fix">
+                    <div class="single-image"><img src="{{ product.ImageUrl }}" alt="{{ product.title }}"></div>
+
+                    {% for p in images  %}
+                    <div class="single-image"><img src="{{ p.image.url }}" alt="{{ product.title }}"></div>
+                    {% endfor %}
+
+                </div>
+
+            </div><!-- Product Image & Thumbnail End -->
+
+            <!-- Product Content Start -->
+            <div class="single-product-content col-lg-5 col-12 mb-30">
+
+                <!-- Title -->
+                <h1 class="title">{{ product.title }}</h1>
+
+                <!-- Product Rating -->
+                <span>
+
+                    <i class="fa fa-star{%if product.average_review >= 1%} checked{%endif%}"></i>
+                    <i class="fa fa-star{%if product.average_review >= 2%} checked{%endif%}"></i>
+                    <i class="fa fa-star{%if product.average_review >= 3%} checked{%endif%}"></i>
+                    <i class="fa fa-star{%if product.average_review >= 4%} checked{%endif%}"></i>
+                    <i class="fa fa-star{%if product.average_review >= 5%} checked{%endif%}"></i>
+                </span>
+
+                <!-- Price -->
+                <span class="product-price">tk {{ product.new_price }}</span>
+
+                <!-- Description -->
+                <div class="description">
+                    <p>{{ product.detail|truncatewords:25 }}</p>
+                </div>
+
+                <!-- Color -->
+                <div class="product-color fix">
+                    <h5>Select Color</h5>
+                    <form action="#">
+                        <div class="color-box"><input type="radio" name="color" id="color-1"><label for="color-1"
+                                style="background-color: #51bd99;">color 1</label></div>
+                        <div class="color-box"><input type="radio" name="color" id="color-2"><label for="color-2"
+                                style="background-color: #83a931;">color 2</label></div>
+                        <div class="color-box"><input type="radio" name="color" id="color-3"><label for="color-3"
+                                style="background-color: #c8001e;">color 3</label></div>
+                        <div class="color-box"><input type="radio" name="color" id="color-4"><label for="color-4"
+                                style="background-color: #414141;">color 4</label></div>
+                    </form>
+                </div>
+
+                <!-- Quantity & Cart Button -->
+                <div class="product-quantity-cart fix">
+                    <form action="{% url 'Add_to_Shoping_cart' id=product.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="product-quantity">
+                            <input class="cart-plus-minus-box" value="1"
+                                            min="1" max="{{product.amount}}"
+                                            type="number" name="quantity">
+                                            
+                        </div>
+                        <button class="add-to-cart" type="submit">add to cart</button>
+                    </form>
+                </div>
+
+                <!-- Action Button -->
+                <div class="product-action-button fix">
+
+                    <button><i class="ion-ios-heart-outline"></i>Wishlist</button>
+
+                </div>
+
+
+
+            </div><!-- Product Content End -->
+
+        </div><!-- Product Wrapper End-->
+
+        <!-- Product Additional Info Start-->
+        <div class="row">
+
+            <!-- Nav tabs -->
+            <div class="col-12 mt-30">
+                <ul class="pro-info-tab-list nav">
+                    <li><a class="active" data-toggle="tab" href="#more-info">More info</a></li>
+                    <li><a data-toggle="tab" href="#data-sheet">Data sheet</a></li>
+                    <li><a data-toggle="tab" href="#reviews">Reviews</a></li>
+                </ul>
+            </div>
+
+            <!-- Tab panes -->
+            <div class="tab-content col-12">
+
+                <div class="pro-info-tab tab-pane active" id="more-info">
+                    <p>{{ product.detail }}</p>
+                </div>
+
+                <div class="pro-info-tab tab-pane" id="data-sheet">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr class="odd">
+                                <td>Compositions</td>
+                                <td>{{ product.compositions }}</td>
+                            </tr>
+                            <tr class="even">
+                                <td>Styles</td>
+                                <td>{{ product.Styles }}</td>
+                            </tr>
+                            <tr class="odd">
+                                <td>Properties</td>
+                                <td>{{ product.Properties }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pro-info-tab tab-pane" id="reviews">
+                    <!-- Comment Wrapper Start -->
+                    <div class="comment-wrapper">
+
+
+                        <!-- Comment List Start -->
+                        <ul class="comment-list">
+
+
+
+                            {% for c in comments %}
+                            <li>
+                                <!-- Single Comment -->
+                                <div class="single-comment fix">
+
+                                    <!-- Content -->
+                                    <div class="content fix">
+                                        <div class="head">
+                                            <span>
+
+                                                <i class="fa fa-star{%if c.rate >= 1%} checked{%endif%}"></i>
+                                                <i class="fa fa-star{%if c.rate >= 2%} checked{%endif%}"></i>
+                                                <i class="fa fa-star{%if c.rate >= 3%} checked{%endif%}"></i>
+                                                <i class="fa fa-star{%if c.rate >= 4%} checked{%endif%}"></i>
+                                                <i class="fa fa-star{%if c.rate >= 5%} checked{%endif%}"></i>
+                                            </span>
+
+                                            <span>by {{ c.user }}</span>
+                                            <span>{{ c.created_at|date:'d F, Y' }}</span>
+                                        </div>
+
+                                        <p><strong>{{ c.comment }}</strong></p>
+
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+
+
+
+
+                        </ul>
+                        <!-- Comment List End -->
+
+                        <!-- Title -->
+                        <h3 class="title">Leave Your Rivew</h3>
+
+                        {% if user.id is not None %}
+                        <!-- Comment Form -->
+                        <form action="{% url 'comment' id=product.id %}" method="POST" class="comment-form row">
+                            {% csrf_token %}
+                            <div class="col-12 mb-30">
+                                <label>Your Rating</label>
+                                <span>
+                                    <select class="star-rating" name="rate">
+                                        <option value="1" name="rate">1
+                                        </option>
+                                        <option value="2" name="rate">2
+                                        </option>
+                                        <option value="3" name="rate">3
+                                        </option>
+                                        <option value="4" name="rate">4
+                                        </option>
+                                        <option value="5" name="rate">5
+                                        </option>
+                                    </select>
+                                </span>
+                            </div>
+                            <div class="col-12 mb-30"><textarea name="comment" placeholder="Write Your Review"
+                                    required></textarea></div>
+                            <div class="col-12"><input value="Submit" type="submit"></div>
+                        </form>
+
+                        {% else %}
+                        <div class="alert alert-info" role="alert">
+                            <strong>You should login first<strong>
+                        </div>
+                        {% endif %}
+
+
+
+                    </div><!-- Comment Wrapper End-->
+
+                </div>
+
+            </div>
+
+        </div><!-- Product Additional Info End-->
+
+    </div>
+</div><!-- Product Section End-->
+
+
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

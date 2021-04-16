@@ -1,0 +1,126 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|Blog
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+
+{% block body %}
+
+
+<!-- Page Banner Section Start-->
+<div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+    <div class="container">
+        <div class="row">
+
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+                <h1>blog</h1>
+            </div><!-- Page Title End -->
+
+        </div>
+    </div>
+</div><!-- Page Banner Section End-->
+
+
+<!-- Blog Section Start-->
+<div class="blog-section section bg-gray pt-100 pb-60">
+    <div class="container">
+        <div class="row flex-row-reverse">
+
+            <!-- Blog Wrapper -->
+            <div class="col-lg-8 col-12 mb-60">
+                <div class="row">
+
+                    <!-- Blog Item Start-->
+
+                    {% for b in page_obj  %}
+                    <div class="blog-item col-md-6 col-12 mb-60">
+
+                        <!-- Image -->
+                        <a href="{% url 'blog_details' id=b.id %}" class="image"><img src="{{b.image.url}}" alt="blog"></a>
+
+                        <!-- Content -->
+                        <div class="content fix">
+
+                            <!-- Publish Date -->
+                            <span class="publish"><span>Published on:</span> {{ b.date_posted|date:'d F, Y' }}</span>
+
+                            <!-- Title -->
+                            <h4 class="title"><a href="{% url 'blog_details' id=b.id %}">{{ b.title }}</a></h4>
+
+                            <!-- Decs -->
+                            <p>{{ b.content|safe|truncatewords:25 }}</p>
+
+                            <!-- Read More Link -->
+                            <a href="{% url 'blog_details' id=b.id %}" class="read-more">Read More</a>
+
+                        </div>
+
+                    </div>
+                    {% endfor %}
+
+
+                    <!-- Blog Item End-->
+
+
+
+                    <!-- Pagination Start -->
+                    <div class="pagination col-12 mt-20">
+
+                        {% if page_obj.has_previous %}
+                        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                        <a class="btn btn-outline-info mb-4"
+                            href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        {% endif %}
+
+                        {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                        <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                        <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                        {% endif %}
+
+                    </div>
+                    <!-- Pagination End -->
+
+                </div>
+            </div>
+
+            <!-- Sidebar Wrapper -->
+           {% include 'blogApp/sidebar.html' %}
+
+        </div>
+    </div>
+</div>
+<!-- Blog Section End-->
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

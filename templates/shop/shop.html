@@ -1,0 +1,137 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|Shop
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+
+{% block body %}
+
+
+<!-- Page Banner Section Start-->
+<div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+    <div class="container">
+        <div class="row">
+
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+                <h1>shop page</h1>
+            </div><!-- Page Title End -->
+
+        </div>
+    </div>
+</div><!-- Page Banner Section End-->
+
+
+<!-- Product Section Start-->
+<div class="product-section section pt-120 pb-120">
+    <div class="container">
+
+        <!-- Product Wrapper Start-->
+        <div class="row">
+
+            
+            {% for p in page_obj %}
+                    <!-- Product Start-->
+            <div class="col-lg-4 col-md-6 col-12 mb-60">
+
+                <div class="product">
+
+                    <!-- Image Wrapper -->
+                    <div class="image">
+                        <!-- Image -->
+                        <a href="{% url 'product_details' slug=p.slug %}" class="img"><img src="{{ p.ImageUrl }}" alt="Product"></a>
+                        <!-- Wishlist -->
+                        <a href="#" class="wishlist"><i class="fa fa-heart-o"></i></a>
+                       
+                    </div>
+
+                    <!-- Content -->
+                    <div class="content">
+
+                        <!-- Head Content -->
+                        <div class="head fix">
+
+                            <!-- Title & Category -->
+                            <div class="title-category float-left">
+                                <h5 class="title"><a href="{% url 'product_details' slug=p.slug %}">{{ p.title }}</a></h5>
+                                <a href="shop.html" class="category">{{ p.category }}</a>
+                            </div>
+                            <!-- Price -->
+                            <div class="price float-right">
+                                <span class="new">tk{{ p.new_price }}</span>
+                                <!-- Old Price Mockup If Need -->
+                                <!-- <span class="old">$46</span> -->
+                            </div>
+
+                        </div>
+
+                        <!-- Action Button -->
+                        <div class="action-button fix">
+                            <a href="{% url 'Add_to_Shoping_cart' id=p.id %}">add to cart</a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div><!-- Product End-->
+      
+            {% endfor %}
+                
+        
+
+            <!-- Pagination Start -->
+            <div class="pagination col-12 mt-20">
+
+                {% if page_obj.has_previous %}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4"
+                    href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                {% endif %}
+
+            </div>
+            <!-- Pagination End -->
+
+        </div><!-- Product Wrapper End-->
+
+    </div>
+</div><!-- Product Section End-->
+
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

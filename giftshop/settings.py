@@ -38,8 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'giftshopApp',
+    'blogApp',
+    'shop',
+    'orderApp',
+    'userApp',
     'ckeditor',
     'crispy_forms',
+    'mptt',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -67,6 +72,11 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+
+            'libraries':{
+            'custom_templatetag': 'giftshopApp.templatetags.giftshoptag',
+
+            }
         },
     },
 ]

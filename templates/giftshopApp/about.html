@@ -1,0 +1,155 @@
+{% extends 'giftshopApp/index.html' %}
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|AboutUs
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+{% block body %}
+
+<!-- Page Banner Section Start-->
+<div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+    <div class="container">
+        <div class="row">
+
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+                <h1>About us</h1>
+            </div>
+            <!-- Page Title End -->
+
+        </div>
+    </div>
+</div>
+<!-- Page Banner Section End-->
+
+
+<!-- About Section Start-->
+<div class="about-section section pt-120 pb-90">
+    <div class="container">
+        <div class="row flex-row-reverse">
+
+            <!-- About Image -->
+            
+            {% if about.video_link %}
+                <div class="about-image col-lg-6 col-12 mb-30">
+                    <a class="video-popup" href="{{ about.video_link }}"><img src="{{ about.thumbnail.url }}"
+                            alt="{{ about.title }}"></a>
+                </div>
+            {% else %}
+                <div class="about-image col-lg-6 col-12 mb-30">
+                    <img src="{{ about.thumbnail.url }}"
+                            alt="{{ about.title }}">
+                </div>
+            {% endif %}
+                
+          
+
+            <!-- Mission Content -->
+            <div class="about-content col-lg-6 col-12 mb-30">
+                <h2>About <span>{{ about.title }}</span></h2>
+                <p>{{ about.description|safe }}</p>
+                <a href="#" class="button">Shop Now</a>
+            </div>
+
+        </div>
+    </div>
+</div><!-- About Section End-->
+
+<!-- Team Section Start-->
+<div class="team-section section pb-120">
+    <div class="container">
+
+        <div class="row">
+            <div class="section-title text-center col mb-60">
+                <h1>Our Team</h1>
+            </div>
+        </div>
+
+        <div class="team-wrapper row">
+
+            
+            {% for t in team %}
+                <div class="single-team col-lg-3 col-md-6 col-12">
+                    <img src="{{ t.picture.url }}" alt="team">
+                    <div class="content">
+                        <h4>{{ t.name }}</h4>
+                        <span>{{ t.position }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+                
+          
+
+        </div>
+
+    </div>
+</div><!-- Team Section End-->
+
+<!-- Funfact Section Start-->
+<div class="funfact-section section pb-90">
+    <div class="container">
+        <div class="row">
+
+            <!-- Single Fact -->
+            <div class="single-fact text-center col-sm-3 col-6 mb-30">
+                <div class="wrap">
+                    <i class="fa fa-users"></i>
+                    <h2 class="counter">{{ about.happy_clients }}</h2>
+                    <p>Happy Clients</p>
+                </div>
+            </div>
+
+            <!-- Single Fact -->
+            <div class="single-fact text-center col-sm-3 col-6 mb-30">
+                <div class="wrap">
+                    <i class="fa fa-trophy"></i>
+                    <h2 class="counter">{{ about.award_wining }}</h2>
+                    <p>Award Winning</p>
+                </div>
+            </div>
+
+            <!-- Single Fact -->
+            <div class="single-fact text-center col-sm-3 col-6 mb-30">
+                <div class="wrap">
+                    <i class="fa fa-thumbs-up"></i>
+                    <h2 class="counter">{{ about.project_done }}</h2>
+                    <p>Project Done</p>
+                </div>
+            </div>
+
+            <!-- Single Fact -->
+            <div class="single-fact text-center col-sm-3 col-6 mb-30">
+                <div class="wrap">
+                    <i class="fa fa-coffee"></i>
+                    <h2 class="counter">{{ about.event }}</h2>
+                    <p>Cups of Coffee</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div><!-- Funfact Section End-->
+
+
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

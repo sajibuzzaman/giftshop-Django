@@ -1,0 +1,39 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+    {% load giftshoptag %}
+    {% setting_tag as setting %}
+    {{ setting.title }}
+{% endblock title %}
+
+
+{% block description %}
+    {% load giftshoptag %}
+    {% setting_tag as setting %}
+    {{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+    {% load giftshoptag %}
+    {% setting_tag as setting %}
+    {{ setting.keyword }}
+{% endblock keywords %}
+    
+
+
+{% block slider %}
+    {% include 'giftshopApp/slider.html' %}
+{% endblock slider %}
+
+
+{% block body %}
+    {% include 'giftshopApp/content.html' %}
+{% endblock body %}
+
+
+{% block footer %}
+    {% include 'giftshopApp/footer.html' %}
+{% endblock footer %}
+    

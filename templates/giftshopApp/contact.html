@@ -1,0 +1,110 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|ContactUs
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+{% block body %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+
+<!-- Page Banner Section Start-->
+<div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+    <div class="container">
+        <div class="row">
+
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+                <h1>contact us</h1>
+            </div><!-- Page Title End -->
+
+        </div>
+    </div>
+</div><!-- Page Banner Section End-->
+
+
+
+<!-- Contact Section Start-->
+<div class="contact-section section  pt-120 pb-90">
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xl-10 col-12 ml-auto mr-auto">
+
+                <div class="contact">
+                    <div class="row">
+
+                        <div class="contact-info col-lg-5 col-12">
+                            <h3>Contact Info</h3>
+                            <p>{{ setting.aboutus|safe }}</p>
+                            <ul>
+                                <li><span>Address:</span>{{ setting.address|safe }}</li>
+                                <li><span>Email:</span>{{ setting.email }}</li>
+                                <li><span>Phone:</span>{{ setting.phone }}</li>
+                            </ul>
+                            <div class="contact-social">
+                                <a href="{{ setting.facebook }}" target="_blank"><i class="fa fa-facebook"></i></a>
+                                <a href="{{ setting.instagram }}" target="_blank"><i class="fa fa-instagram"></i></a>
+                                <a href="{{ setting.twitter }}" target="_blank"><i class="fa fa-twitter"></i></a>
+                                <a href="{{ setting.pinterest }}" target="_blank"><i class="fa fa-pinterest-p"></i></a>
+                            </div>
+                        </div>
+                        <div class="contact-form col-lg-7 col-12">
+
+                            <h4 class="title">Send Your Massage</h4>
+                            <div>
+                                {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                    <strong>{{ message }}</strong>
+                                </div>
+                                {% endfor %}
+                                {% endif %}
+                            </div>
+
+                            <form action="{% url 'contact' %}" method="post">
+                                {% csrf_token %}
+                                <input type="text" name="name" placeholder="Your Name" required>
+                                <input type="email" name="email" placeholder="Your Email" required>
+                                <textarea name="message" placeholder="Your Message" required></textarea>
+                                <input type="submit" value="Submit">
+                            </form>
+                         
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Contact Section End-->
+
+
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

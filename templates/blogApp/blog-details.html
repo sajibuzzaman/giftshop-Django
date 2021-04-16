@@ -1,0 +1,160 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|Blog
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+
+{% block body %}
+{% load static %}
+
+<!-- Page Banner Section Start-->
+<div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+    <div class="container">
+        <div class="row">
+
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+                <h1>blog details</h1>
+            </div><!-- Page Title End -->
+
+        </div>
+    </div>
+</div><!-- Page Banner Section End-->
+
+
+<!-- Blog Section Start-->
+<div class="blog-section section bg-gray pt-100 pb-60">
+    <div class="container">
+        <div class="row flex-row-reverse">
+
+            <!-- Blog Wrapper -->
+            <div class="col-lg-8 col-12 mb-60">
+                <div class="row">
+
+                    <div class="col-12">
+
+                        <!-- Blog Item Start-->
+                        <div class="blog-item">
+
+                            <!-- Image -->
+                            <div class="img"><img src="{{ blog.image.url }}" alt="blog"></div>
+
+                            <!-- Content -->
+                            <div class="content fix">
+
+                                <!-- Publish Date -->
+                                <span class="publish"><span>Published on:</span> {{ blog.date_posted }}</span>
+
+                                <!-- Title -->
+                                <h4 class="title">{{ blog.title }}</h4>
+
+                                <!-- Decs -->
+                                {{ blog.content|safe }}
+
+
+                            </div>
+
+                        </div><!-- Blog Item End-->
+
+                        <!-- Comment Wrapper Start -->
+                        <div class="comment-wrapper">
+
+                            <!-- Title -->
+                            <h3 class="title">Comments</h3>
+
+                            <!-- Comment List Start -->
+                            <ul class="comment-list">
+
+
+                                {% for c in comments %}
+                                <li>
+                                    <!-- Single Comment -->
+                                    <div class="single-comment fix">
+                                        
+                                        <!-- Image -->
+                                        <div class="image float-left">
+                                            <img src="{% static 'giftshopApp/img/default.jpg' %}" alt="">
+                                        </div>
+                                        
+                                        <!-- Content -->
+                                        <div class="content fix">
+                                            <div class="head">
+                                                <h5>{{ c.user }}</h5>
+                                                <span>{{ c.created_at|date:'d F, Y' }}</span>
+                                            </div>
+
+                                            <p>{{ c.comment }}</p>
+
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+
+
+
+                            </ul>
+                            <!-- Comment List End -->
+
+                            <!-- Title -->
+                            <h3 class="title">Leave a Comment</h3>
+
+                            <!-- Comment Form -->
+
+
+                            <form action="{% url 'blog_comment' id=blog.id %}" class="comment-form row" method="POST">
+                                {% csrf_token %}
+                                <div class="col-12 mb-30"><textarea name="comment" placeholder="Write Your Comment"
+                                        required></textarea></div>
+                                {% if user.id is not None %}
+                                <div class="col-12"><input value="Submit" type="submit"></div>
+                                {% else %}
+                                <div class="col-12">
+                                    <div class="alert alert-info" role="alert">
+                                        <h6>You should login first</h6>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </form>
+
+
+
+                        </div><!-- Comment Wrapper End-->
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sidebar Wrapper -->
+            {% include 'blogApp/sidebar.html' %}
+
+        </div>
+    </div>
+</div><!-- Blog Section End-->
+
+
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

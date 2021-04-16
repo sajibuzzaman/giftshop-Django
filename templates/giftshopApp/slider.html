@@ -1,0 +1,24 @@
+{% load static %}
+<div class="hero-slider section fix">
+
+    <!-- Hero Slide Item Start-->
+    
+    {% for slider in sliders %}
+    <div class="hero-item" style="background-image: url({{slider.image.url}})">
+
+        <!-- Hero Content Start-->
+        <div class="hero-content text-center m-auto">
+
+            <h1>{{ slider.title }}</h1>
+            <p>{{ slider.description|safe }}</p>
+            <a href="#">LEARN MORE</a>
+
+        </div><!-- Hero Content End-->
+
+
+    </div>
+    {% endfor %}
+        
+   <!-- Hero Slide Item End-->
+
+</div>

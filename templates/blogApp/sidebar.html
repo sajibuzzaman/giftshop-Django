@@ -1,0 +1,48 @@
+<div class="col-lg-4 col-12 mb-60">
+    <div class="sidebar-wrapper">
+
+        <!-- Single Sidebar -->
+        <div class="single-sidebar mb-30">
+
+            <!-- Titel -->
+            <h4 class="sidebar-title">Search</h4>
+
+            <!-- Form -->
+            <form action="#" class="sidebar-search-form">
+                <input type="text" placeholder="Enter Keywords">
+                <button><i class="ion-ios-search-strong"></i></button>
+            </form>
+
+        </div>
+
+        <!-- Single Sidebar -->
+        <div class="single-sidebar mb-30">
+
+            <!-- Titel -->
+            <h4 class="sidebar-title">Recent Post</h4>
+
+            <!-- Sdebar Post -->
+            
+            {% for l in latest  %}
+            <div class="sidebar-post fix">
+                <!-- Image -->
+                <a href="{% url 'blog_details' id=l.id %}" class="image"><img src="{{ l.image.url }}" alt=""></a>
+                <!-- Content -->
+                <div class="content fix">
+                    <span class="date">{{ l.date_posted|date:'d F, Y' }}</span>
+                    <a href="{% url 'blog_details' id=l.id %}" class="title">{{ l.title }}</a>
+                    <p>{{ l.content|safe|truncatewords:10 }}</p>
+                </p>
+                </div>
+            </div>
+            {% endfor %}
+                
+         
+
+
+        </div>
+
+
+
+    </div>
+</div>

@@ -1,0 +1,145 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|Cart
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+
+{% block body %}
+    
+       
+    <!-- Page Banner Section Start-->
+    <div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+        <div class="container">
+            <div class="row">
+                
+                <!-- Page Title Start -->
+                <div class="page-title text-center col">
+                    <h1>Cart</h1>
+                </div><!-- Page Title End -->
+                
+            </div>
+        </div>
+    </div><!-- Page Banner Section End-->
+    
+       
+    <!-- Cart Section Start-->
+    <div class="cart-section section pt-120 pb-90">
+
+        <div class="text-center">
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                <strong>{{ message }}</strong>
+            </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                   
+                    <div class="table-responsive mb-30">
+                        <table class="table cart-table text-center">
+                            
+                            <!-- Table Head -->
+                            <thead>
+                                <tr>
+                                    <th class="number">#</th>
+                                    <th class="image">image</th>
+                                    <th class="name">product name</th>
+                                    <th class="qty">quantity</th>
+                                    <th class="price">price</th>
+                                    <th class="total">totle</th>
+                                    <th class="total">Update</th>
+                                    <th class="remove">remove</th>
+                                </tr>
+                            </thead>
+                            
+                            <!-- Table Body -->
+                            <tbody>
+                                
+                                
+                                    
+                                
+                                {% for c in cart_products %}
+                                <form action="{% url 'cart_update' id=c.id %}" method="post">
+                                {% csrf_token %}
+                                <tr>
+                                    <td><span class="cart-number">{{ forloop.counter }}</span></td>
+                                    <td><a href="{% url 'product_details' slug=c.product.slug %}" class="cart-pro-image"><img src="{{ c.product.ImageUrl }}" alt="" /></a></td>
+                                    <td><a href="{% url 'product_details' slug=c.product.slug %}" class="cart-pro-title">{{ c.product.title }}</a></td>
+                                    <td><div class="product-quantity">
+                                        <input class="cart-plus-minus-box" value="{{ c.quantity }}"
+                                            min="1" max="{{c.product.amount}}"
+                                            type="number" name="quantity">
+                                    </div></td>
+                                    <td><p class="cart-pro-price">tk {{ c.price }}</p></td>
+                                    <td><p class="cart-price-total">tk {{ c.amount }}</p></td>
+                                    <td><button class="button" type="submit">update cart</button></td>
+                                    <td> <a class="cart-pro-remove" href="{% url 'cart_delete' id=c.id %}"><i class="fa fa-trash-o" onclick="return confirm('Are  you sure delete')"></i></a></td>
+                                </tr>
+                            </form>
+                                {% endfor %}
+                                    
+                             
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="row">
+                       
+                        <!-- Cart Action -->
+                        <div class="cart-action col-lg-4 col-md-6 col-12 mb-30">
+                            <a href="{% url 'shop' %}" class="button">Continiue Shopping</a>
+                            <button class="button" type="submit">update cart</button>
+                        </div>
+                  
+                        
+                          <!-- Cart Cuppon -->
+                          <div class="cart-cuppon col-lg-4 col-md-6 col-12 mb-30">
+                         
+                        </div>
+                        
+                        <!-- Cart Checkout Progress -->
+                        <div class="cart-checkout-process col-lg-4 col-md-6 col-12 mb-30">
+                            <h4 class="title">Process Checkout</h4>
+                            <p><span>Subtotal</span><span>tk {{ total_amount }}</span></p>
+                            <h5><span>Grand total</span><span>tk {{ total_amount }}</span></h5>
+                            <button class="button">process to checkout</button>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div><!-- Cart Section End-->
+
+       
+    {% endblock body %}
+
+
+    {% block footer %}
+    {% include 'giftshopApp/footer.html' %}
+    {% endblock footer %}

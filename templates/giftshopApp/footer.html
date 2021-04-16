@@ -1,0 +1,63 @@
+{% load static %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+
+<div class="footer-section section bg-dark" style="background-image: url(static/giftshopApp/img/bg/footer-bg.png)">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col">
+
+                <!-- Footer Top Start -->
+                <div class="footer-top section pt-80 pb-50">
+                    <div class="row">
+
+                        <!-- Footer Widget -->
+                        <div class="footer-widget col-lg-4 col-md-6 col-12 mb-40">
+
+                            <img class="footer-logo" src="{{ setting.logo.url }}" alt="logo">
+                            <p>{{ setting.aboutus|safe }}</p>
+
+                        </div>
+
+                        <!-- Footer Widget -->
+                        <div class="footer-widget col-lg-3 col-md-6 col-12 mb-40">
+
+                            <h4 class="widget-title">Information</h4>
+
+                            <ul>
+                                <li><a href="#">About us</a></li>                       
+                                <li><a href="#">Team member</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">Contact us</a></li>
+                            </ul>  
+
+                        </div>
+
+                        <!-- Footer Widget -->
+                        <div class="footer-widget col-lg-4 col-md-6 col-12 mb-40">
+
+                            <h4 class="widget-title">Contact Us</h4>
+
+                            <ul>
+                                <li><span>Address:</span> {{ setting.address|safe }}</li>
+                                <li><span>Phone:</span> {{ setting.phone }}</li>
+                                <li><span>Eax:</span> {{ setting.fax }}</li>
+                                <li><span>Email:</span> {{ setting.email }}</li>
+                            </ul>  
+
+                        </div>
+
+                    </div>
+                </div><!-- Footer Top End -->
+                
+                <!-- Footer Bottom Start -->
+                <div class="footer-bottom section text-center">
+                    <p><a href="{% url 'home' %}">{{ setting.title }}</a></p>
+                </div><!-- Footer Bottom End -->
+
+            </div>
+        </div>
+        
+    </div>
+</div>

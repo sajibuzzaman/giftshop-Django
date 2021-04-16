@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.forms import ModelForm
 
 # Create your models here.
 class Setting(models.Model):
@@ -33,3 +34,63 @@ class Setting(models.Model):
 
     def __str__(self):
         return self.title
+
+class Slider(models.Model):
+    title = models.CharField(max_length=200)
+    description = RichTextUploadingField()
+    image = models.ImageField(upload_to='slider/')
+    default = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
+
+class About(models.Model):
+    STATUS = (
+        ('True', 'True'),
+        ('False', 'False'),
+    )
+    title = models.CharField(max_length=200)
+    description = RichTextUploadingField()
+    thumbnail = models.ImageField(upload_to = "image/")
+    video_link = models.URLField(blank=True, max_length=50)
+    happy_clients = models.PositiveIntegerField(default=0)
+    award_wining = models.PositiveIntegerField(default=0)
+    project_done = models.PositiveIntegerField(default=0)
+    event = models.PositiveIntegerField(default=0)
+    status = models.CharField(max_length=50, choices=STATUS)
+
+    def __str__(self):
+        return self.title
+
+class Team(models.Model):
+    name = models.CharField(max_length=100)
+    position = models.CharField(max_length=100)
+    picture = models.ImageField(upload_to="team/", default= 'default.jpg')
+
+    def __str__(self):
+       return self.name
+
+class ContactMessage(models.Model):
+    STATUS = (
+        ('New', 'New'),
+        ('Read', 'Read'),
+        ('Closed', 'Closed'),
+
+    )
+    name = models.CharField(max_length=200)
+    email = models.EmailField(max_length=40)
+    message = models.TextField(max_length=1000, blank=True)
+    status = models.CharField(max_length=40, choices=STATUS, default='New')
+    ip = models.CharField(max_length=100, blank=True)
+    Note = models.CharField(max_length=200, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+
+class ContactForm(ModelForm):
+    class Meta:
+        model = ContactMessage
+        fields = ['name', 'email', 'message']
