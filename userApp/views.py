@@ -62,3 +62,14 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('home')
+
+def user_profile(request):
+    slider = Slider.objects.get(default=True)
+    current_user = request.user
+    profile = UserProfile.objects.get(user_id=current_user.id)
+
+    context = {
+        'slider' : slider,
+        'profile' : profile,
+    }
+    return render(request, 'userApp/user_profile.html', context)

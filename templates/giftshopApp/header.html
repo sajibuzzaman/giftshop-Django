@@ -38,7 +38,7 @@
                                     <ul>
                                         
                                         {% if user.id is not None %}
-                                            <li><a href="#">My Account | {{ user }}</a></li>
+                                            <li><a href="{% url 'user_profile' %}">My Account | {{ user }}</a></li>
                                             <li><a href="wishlist.html">Wishlist</a></li>
                                         {% else %}                                     
                                             <li><a href="{% url 'user_login' %}">Sign In</a></li>
