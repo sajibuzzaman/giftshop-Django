@@ -18,7 +18,7 @@ class OrderAdmin(admin.ModelAdmin):
                     'phone', 'total', 'status', 'transaction_id']
     list_filter = ['status']
     readonly_fields = ('user', 'first_name', 'last_name',
-                       'phone', 'address', 'city', 'country', 'total', 'ip', 'transaction_id', 'image_tag')
+                       'phone', 'address', 'city', 'country', 'total', 'code', 'ip', 'transaction_id', 'image_tag')
     can_delete = False
     inlines = [OrderProductline]
 
@@ -28,6 +28,5 @@ class OrderProductAdmin(admin.ModelAdmin):
     list_filter = ['user']
 
 # Register your models here.
-admin.site.register(ShopCart, ShopCartAdmin)
+
 admin.site.register(Order, OrderAdmin)
-admin.site.register(OderProduct, OrderProductAdmin)

@@ -6,4 +6,4 @@ class UserProfileAdmin(admin.ModelAdmin):
 	list_filter=['user',]
   
 # Register your models here.
-admin.site.register(UserProfile, UserProfileAdmin)
+

@@ -1,0 +1,109 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|SignIn
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+
+{% block body %}
+
+
+<!-- Page Banner Section Start-->
+<div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+    <div class="container">
+        <div class="row">
+
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+                <h1>Order Info</h1>
+            </div><!-- Page Title End -->
+
+        </div>
+    </div>
+</div><!-- Page Banner Section End-->
+
+<!-- Li's Breadcrumb Area End Here -->
+<!--Wishlist Area Strat-->
+<div class="contact-section section  pt-120 pb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-3 mb-30">
+                <h1 class="font-weight-bold">User Panel</h1>
+                {% include 'userApp/user_panel.html' %}
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-9 col-xs-12 wishlist-section section">
+                <form action="#">
+                    <div class="table mb-30">
+                        <table class="table cart-table text-center">
+                            
+                            <!-- Table Head -->
+                            <thead>
+                                <tr>
+                                    <th class="number">#</th>     
+                                    <th class="total">Ordered Code</th>
+                                    <th class="price">Ordered Price</th>
+                                    <th class="qty">Status</th>
+                                    <th class="name">Admin note</th>
+                                    <th class="total">Action</th>
+                                </tr>
+                            </thead>
+                            
+                            <!-- Table Body -->
+                            <tbody>
+                                {% for p in orders %}
+                                <tr>
+                                    <td><span class="cart-number">{{ forloop.counter }}</span></td>
+                                    <td><p class="cart-pro-title">{{ p.code }}</p></td>
+                                    <td><p class="cart-pro-price">tk {{p.total}}</p></td>
+                                    
+                                    {% if p.status == "Cancelled" %}
+                                        <td><p class="stock in-stock" style="color:red;">{{p.status}}</p></td>
+                                    {% elif p.status == "Completed" %}
+                                        <td><p class="stock in-stock">{{p.status}}</p></td>
+                                    {% elif p.status == "New" %}
+                                        <td><p class="stock in-stock" style="color:rgb(51, 54, 36);">{{p.status}}</p></td>
+                                    {% else %}
+                                        <td><p class="stock in-stock" style="color:rgb(159, 175, 9);">{{p.status}}</p></td>
+                                    {% endif %}
+                                        
+                                    <td><strong> <i>{{p.adminnote}}</i></strong></td>
+                                    <td><button class="wl-add-cart-btn mt-15 mb-15"><a href="{%url 'user_oder_details' id=p.id%}">Details</a></button></td>
+                                    
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

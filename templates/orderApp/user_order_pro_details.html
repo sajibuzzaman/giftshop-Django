@@ -1,0 +1,130 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|SignIn
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+
+{% block body %}
+<!-- Page Banner Section Start-->
+<div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+    <div class="container">
+        <div class="row">
+
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+                <h1>Order Product Details</h1>
+            </div><!-- Page Title End -->
+
+        </div>
+    </div>
+</div><!-- Page Banner Section End-->
+
+<!--Wishlist Area Strat-->
+<div class="contact-section section  pt-120 pb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-3 mb-30">
+                <h1 class="font-weight-bold">User Panel</h1>
+                {% include 'userApp/user_panel.html' %}
+            </div>
+
+            <div class="col-sm-12 col-md-12 col-lg-9 col-xs-12">
+                        <table class="shopping-cart-table table">
+                        <tr>
+                            <th class="text-left">Name Surname</th>
+                            <td class="text-left">{{ order_product.order.first_name}} {{ order_product.order.last_name}} </td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Phone</th>
+                            <td class="text-left">{{ order_product.order.phone}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Addres</th>
+                            <td class="text-left">{{ order_product.order.address}}, {{ order_product.order.city}}, {{ order_product.order.country}} </td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Status</th>
+                            <td class="text-left">{{ order_product.status}}</td>
+                        </tr>
+                        <tr>
+                            <th class="text-left">Date: </th>
+                            <td class="text-left">{{ order_product.created_at}}</td>
+                        </tr>
+
+
+                    </table>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 wishlist-section section">
+            <form action="#">
+                <div class="table mb-30">
+                    <table class="table cart-table text-center">
+                        <thead>
+                            <tr>
+                               
+                                <th class="image">images</th>
+                                <th class="name">Product Title</th>
+
+                                <th class="price"> Price</th>
+                                <th class="price">Quantity</th>
+                                <th class="price"> Total Price</th>
+                                <th class="total">Status</th>
+                       
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                
+                                <td ><a href="#" class="cart-pro-image"><img src="{{order_product.product.ImageUrl}}"
+                                            alt="{{ p.product.title }}"></a></td>
+                                <td><span class="cart-pro-title">{{order_product.product.title}}</span></td>
+                                <td><span class="cart-pro-price">tk {{order_product.price}}</span></td>
+                                <td><span class="cart-pro-price">×{{order_product.quantity}}</span></td>
+                                <td><span class="cart-pro-price">tk {{order_product.amountnow}}</span></td>
+                                {% if order_product.status == "Cancelled" %}
+                                    <td><p class="stock in-stock" style="color:red;">{{order_product.status}}</p></td>
+                                {% elif order_product.status == "New" %}
+                                    <td><p class="stock in-stock" style="color:rgb(51, 54, 36);">{{order_product.status}}</p></td>
+                                {% else %}
+                                    <td><p class="stock in-stock">{{order_product.status}}</p></td>
+                                {% endif %}
+                                </td>
+
+                            </tr>
+                        
+
+                        </tbody>
+                    </table>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

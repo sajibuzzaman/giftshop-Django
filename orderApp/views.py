@@ -164,3 +164,57 @@ def OrderCart(request):
         # 'total_amount': total_amount
     }
     return render(request, 'orderApp/order_form.html', context)
+
+@login_required(login_url='/user/login')
+def Order_showing(request):
+    slider = Slider.objects.get(default=True)
+    current_user = request.user
+    orders = Order.objects.filter(user_id=current_user.id)
+    context = {
+        'slider' : slider,
+        'orders': orders
+
+    }
+
+    return render(request, 'orderApp/user_order_showing.html', context)
+
+
+@login_required(login_url='/user/login')
+def user_oder_details(request, id):
+    slider = Slider.objects.get(default=True)
+    current_user = request.user
+    order = Order.objects.get(user_id=current_user.id, id=id)
+    order_products = OderProduct.objects.filter(order_id=id)
+    context = {
+
+        'order': order,
+        'order_products': order_products,
+        'slider' : slider,
+
+    }
+    return render(request, 'orderApp/user_order_details.html', context)
+
+@login_required(login_url='/user/login')
+def Order_Product_showing(request):
+    slider = Slider.objects.get(default=True)
+    current_user = request.user
+    order_product = OderProduct.objects.filter(user_id=current_user.id)
+    context = {
+        'slider' : slider,
+        'order_product': order_product
+
+    }
+
+    return render(request, 'orderApp/OrderProducList.html', context)
+
+
+@login_required(login_url='/user/login')
+def useroderproduct_details(request, id):
+    slider = Slider.objects.get(default=True)
+    current_user = request.user
+    order_product = OderProduct.objects.get(user_id=current_user.id, id=id)
+    context = {
+        'order_product': order_product,
+        'slider' : slider,
+    }
+    return render(request, 'orderApp/user_order_pro_details.html', context)
