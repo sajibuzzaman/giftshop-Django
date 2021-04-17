@@ -1,0 +1,156 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|SignIn
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+
+{% block body %}
+{% load crispy_forms_tags %}
+
+    <!-- Page Banner Section Start-->
+    <div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+        <div class="container">
+            <div class="row">
+                
+                <!-- Page Title Start -->
+                <div class="page-title text-center col">
+                    <h1>Checkout</h1>
+                </div><!-- Page Title End -->
+                
+            </div>
+        </div>
+    </div><!-- Page Banner Section End-->
+    
+       
+    <!-- Checkout Section Start-->
+    <div class="cart-section section pt-120 pb-90">
+        <div class="container">
+            <div class="row">
+               
+                <div class="col-lg-6 col-12 mb-30">
+                   
+                    <!-- Checkout Accordion Start -->
+                    <div id="checkout-accordion" class="panel-group">
+                       
+                      
+                        
+                         <!-- Billing Method -->
+                         <div class="panel single-accordion order-details-wrapper">
+                            <h2>Billing informatioon</h2>
+                            <div id="billing-method">
+                                <div class="accordion-body billing-method fix">
+                                   
+                                    <form action="#" class="billing-form checkout-form" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-12 mb-20">
+                                                <label>Country <span class="required">*</span></label>
+                                                <select class="nice-select wide" value="{{ profile.country }}" name="country">
+                                                  <option data-display="Bangladesh">Bangladesh</option>                       
+                                                  <option value="uk">London</option>
+                                                  <option value="rou">Romania</option>
+                                                  <option value="fr">French</option>
+                                                  <option value="de">Germany</option>
+                                                  <option value="aus">Australia</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-20">	
+                                                <label>First Name <span class="required">*</span></label>								
+                                                <input type="text" placeholder="First Name" value="{{ user.first_name }}" name="first_name">
+                                            </div>
+                                            <div class="col-md-6 col-12 mb-20">		
+                                                <label>Last Name <span class="required">*</span></label>						
+                                                <input type="text" placeholder="Last Name" value="{{ user.last_name }}" name="last_name">
+                                            </div>
+                                           
+                                            <div class="col-12 mb-20">
+                                                <label>Address <span class="required">*</span></label>
+                                                <input placeholder="Address" type="text" value="{{ profile.address }}" name="address">
+                                            </div>
+                   
+                                            <div class="col-12 mb-20">
+                                                <label>Town / City <span class="required">*</span></label>
+                                                <input placeholder="Town / City" type="text" value="{{ profile.city }}" name="city">
+                                            </div>
+                                          
+                                            <div class="col-md-12 col-12 mb-20">	
+                                                <label>Phone  <span class="required">*</span></label>								
+                                                <input placeholder="Phone Number" value="{{ profile.phone }}" name="phone">
+                                            </div>	
+                                            <div class="col-md-6 col-12 mb-20">									
+                                                <button class="btn" style="background-color: #83A931; color:#F7FFFF;">Place order</button>					
+
+                                            </div>	
+                                        </div>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                     
+                        
+                      
+                        
+                    </div><!-- Checkout Accordion Start -->
+                    
+                </div>
+                
+                <!-- Order Details -->
+                <div class="col-lg-6 col-12 mb-30">
+                   
+                    <div class="order-details-wrapper">
+                        <h2>your order</h2>
+                        <div class="order-details">
+                            <form action="#">
+                                <ul>
+                                    <li><p class="strong">product</p><p class="strong">total</p></li>
+                                    
+                                    {% for s in shoping_cart  %}
+                                        <li><p>{{ s.product }} x{{ s.quantity }}</p><p>tk {{ s.amount }}</p></li>
+                                    {% endfor %}
+                                        
+                                    
+                                    
+                                    <li><p class="strong">cart subtotal</p><p class="strong">tk {{ totalamount }}</p></li>
+                                    <li><p class="strong">shipping</p><p>
+                                        
+                                        <label for="free">Free Shipping</label>
+                                    </p></li>
+                                    <li><p class="strong">order total</p><p class="strong">tk {{ totalamount }}</p></li>
+                                    
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div><!-- Checkout Section End-->
+
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

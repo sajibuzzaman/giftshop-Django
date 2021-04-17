@@ -1,0 +1,121 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|SignIn
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+
+{% block body %}
+
+
+
+<!-- Page Banner Section Start-->
+<div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+    <div class="container">
+        <div class="row">
+
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+                <h1>User Comment</h1>
+            </div><!-- Page Title End -->
+
+        </div>
+    </div>
+</div><!-- Page Banner Section End-->
+
+
+
+
+
+<!--start from here-->
+<div class="contact-section section  pt-120 pb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-3 mb-30">
+                <h1 class="font-weight-bold">User Panel</h1>
+                {% include 'userApp/user_panel.html' %}
+            </div>
+          
+            <div class="col-sm-12 col-md-12 col-lg-9 col-xs-12">
+                <div>
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}" role="alert">
+                        <strong>{{ message }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                <h1 class="text-center font-weight-bold">User Comments</h1>
+                <table class="shopping-cart-table table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Item Image</th>
+                            <th class="text-center">Product Name </th>
+
+                            <th class="text-center">Comment</th>
+
+                            <th class="text-center">Comment Date</th>
+                            <th class="text-center">Action</th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for p in comment%}
+                        <tr>
+                            <td class="thumb text-center"><a href=""><img src="{{p.product.ImageUrl}}" alt=""
+                                        height="30px"></a></td>
+                            <td class="text-center"><a href="">{{p.product.title}}</a></td>
+
+                            <td class="status text-center">{{p.comment}}</td>
+
+                            <td class="created text-center">{{p.created_at}}</td>
+                            <td class="pull-right"><button class="btn btn-danger">
+                                    <a href="{%url 'comment_delete' id=p.id%}"
+                                        onclick="return confirm('Are You sure delete your comment?')">
+                                        Delete
+                                    </a>
+                                </button></td>
+
+
+
+                        </tr>
+                        {%endfor%}
+
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <!--end from here-->
+
+    </div>
+</div>
+
+
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

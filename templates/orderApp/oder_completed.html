@@ -1,0 +1,86 @@
+{% extends 'giftshopApp/index.html' %}
+
+
+{% block title %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.title }}|SignIn
+{% endblock title %}
+
+
+{% block description %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.description|safe }}
+{% endblock description %}
+
+
+{% block keywords %}
+{% load giftshoptag %}
+{% setting_tag as setting %}
+{{ setting.keyword }}
+{% endblock keywords %}
+
+
+
+{% block body %}
+
+ <!-- Page Banner Section Start-->
+ <div class="page-banner-section section" style="background-image: url({{slider.image.url}})">
+    <div class="container">
+        <div class="row">
+            
+            <!-- Page Title Start -->
+            <div class="page-title text-center col">
+                <h1>Completed Order</h1>
+            </div><!-- Page Title End -->
+            
+        </div>
+    </div>
+</div><!-- Page Banner Section End-->
+
+
+
+<div class="contact-section section  pt-120 pb-90">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="order-summary clearfix">
+                    <div class="section-title">
+                        <div>
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}" role="alert">
+                                <strong>{{ message }}</strong>
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <h3 class="title">Order Complated</h3>
+                    </div>
+                  
+                    <h2>Dear {{ user.first_name }} {{  user.last_name }}</h2>
+                    <h3>Your order is completed</h3>
+                    <h3>Order Code : {{ ordercode }}</h3>
+                    <h3>Thank You</h3>
+                    <hr>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+{% endblock body %}
+
+
+{% block footer %}
+{% include 'giftshopApp/footer.html' %}
+{% endblock footer %}

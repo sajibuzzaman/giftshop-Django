@@ -7,6 +7,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .forms import SignUpForm, UserUpdateForm, ProfileUpdateForm
 from .models import UserProfile
 from giftshopApp.models import Slider
+from shop.models import Comment
 
 # Create your views here.
 def user_signup(request):
@@ -99,3 +100,46 @@ def user_update(request):
             'profile_form': profile_form,
         }
         return render(request, 'userApp/userupdate.html', context)
+
+@login_required(login_url='/user/login')  # Check login
+def user_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(
+                request, 'Your password has been successfully updated!')
+            return redirect('user_profile')
+        else:
+            messages.error(
+                request, 'Please correct the error below.<br>' + str(form.errors))
+            return redirect('user_password')
+    else:
+        slider = Slider.objects.get(default=True)
+        form = PasswordChangeForm(request.user)
+        return render(request, 'userApp/userpasswordupdate.html', {'form': form,
+                                                            'slider' : slider,
+                                                           })
+
+
+@login_required(login_url='/user/login')
+def usercomment(request):
+    slider = Slider.objects.get(default=True)
+
+    current_user = request.user
+    comment = Comment.objects.filter(user_id=current_user.id)
+    context = {
+        'slider' : slider,
+        'comment': comment
+
+    }
+    return render(request, 'userApp/usercomment.html', context)
+
+
+def comment_delete(request, id):
+    current_user = request.user
+    comment = Comment.objects.filter(user_id=current_user.id, id=id)
+    comment.delete()
+    messages.success(request, 'Your comment is successfully deleted')
+    return redirect('usercomment')

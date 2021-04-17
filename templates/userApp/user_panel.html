@@ -3,9 +3,8 @@
         <li><a href="{%url 'user_profile'%}">User Profile</a></li>
         <li><a href="">My Orders</a></li>
         <li><a href="">My Order Product</a></li>
-        <li><a href="">My Comments</a></li>
+        <li><a href="{% url 'usercomment' %}">My Comments</a></li>
         <li><a href="">My Favorits</a></li>
-        <li><a href="">My Products</a></li>
-        <li><a href="">Logout</a></li>
+        <li> <button class="btn btn-sm btn-secondary mt-30"> <a href="{% url 'user_logout' %}">Logout</a> </button> </li>
     </ul>
 </div>
