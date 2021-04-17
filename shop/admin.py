@@ -1,7 +1,7 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
 import admin_thumbnails
-from .models import Product, Category, Comment, Images
+from .models import Product, Category, Comment, Images, Favourite
 class CategoryAdmin(DraggableMPTTAdmin):
     prepopulated_fields = {'slug': ('title',)}
     mptt_indent_field = "title"
@@ -63,3 +63,4 @@ class CommentAdmin(admin.ModelAdmin):
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Comment,CommentAdmin)
+admin.site.register(Favourite)

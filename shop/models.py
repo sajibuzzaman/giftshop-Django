@@ -4,7 +4,7 @@ from mptt.models import MPTTModel, TreeForeignKey
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.forms import ModelForm
-from django.db.models import Count, Sum, Avg
+from django.db.models import Count, Sum, Avg, fields
 
 # Create your models here.
 class Category(MPTTModel):
@@ -105,3 +105,12 @@ class CommentForm(ModelForm):
         model = Comment
         fields = ['comment', 'rate']
 
+class Favourite(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    
+    def price(self):
+        return self.product.new_price
+
+    def __str__(self):
+        return self.product.title

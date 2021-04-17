@@ -60,7 +60,13 @@
                         <!-- Image -->
                         <a href="{% url 'product_details' slug=p.slug %}" class="img"><img src="{{ p.ImageUrl }}" alt="Product"></a>
                         <!-- Wishlist -->
-                        <a href="#" class="wishlist"><i class="fa fa-heart-o"></i></a>
+                        
+                        {% for f in favourites  %}
+                        
+                        <a href="{% url 'favourite' id=p.id %}" class="wishlist"><i class="fa fa-heart{%if f.product.id != p.id%}-o{%endif%}"></i></a>
+                            
+                        {% endfor %}
+                            
                        
                     </div>
 

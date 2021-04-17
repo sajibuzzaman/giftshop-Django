@@ -1,6 +1,7 @@
 from django import template
 from ..models import Setting
 from orderApp.models import ShopCart
+from shop.models import Category
 
 register = template.Library()
 
@@ -24,3 +25,7 @@ def total_tag(context):
     for p in cart_products:
         total_amount+=p.product.new_price*p.quantity
     return total_amount
+
+@register.simple_tag
+def category_tag():
+    return Category.objects.all()

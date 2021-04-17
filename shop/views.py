@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator
 from giftshopApp.models import Slider
-from .models import Product, Images, Comment, CommentForm
+from .models import Product, Images, Comment, CommentForm, Favourite
 
 # Create your views here.
 def shop(request):
@@ -11,9 +11,14 @@ def shop(request):
     paginator = Paginator(products, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    
+    current_user = request.user
+    favourites = Favourite.objects.filter(user_id=current_user.id)
+
     context={
         'slider' : slider,
         'page_obj' : page_obj,
+        'favourites' : favourites,
     }
     return render(request, 'shop/shop.html', context)
 
@@ -46,3 +51,40 @@ def CommentView(request, id):
             messages.success(request, 'Your informative review has been sent')
             return HttpResponseRedirect(url)
     return HttpResponseRedirect(url)
+
+def FavouriteView(request, id):
+    url = request.META.get('HTTP_REFERER')
+    current_user = request.user
+    checking = Favourite.objects.filter(
+        product_id=id, user_id=current_user.id)
+  
+    if checking:        
+        return HttpResponseRedirect(url)
+    else:
+        data = Favourite()
+        data.product_id = id
+        data.user_id = current_user.id
+        data.save()
+        return HttpResponseRedirect(url)
+
+def wishlist(request):
+    slider = Slider.objects.get(default=True)
+
+    current_user = request.user
+    favourites= Favourite.objects.filter(user_id=current_user.id).order_by('-id')
+
+    context={
+        'favourites' : favourites,
+        'slider' : slider,
+    }
+
+    return render(request, 'shop/wishlist.html', context)
+
+def wishlist_delete(request,id):
+    url = request.META.get('HTTP_REFERER')
+    current_user = request.user
+    favourite = Favourite.objects.get(id=id, user_id=current_user.id)
+    favourite.delete()
+    messages.warning(request, 'Your  wishlist product has been deleted.')
+    return HttpResponseRedirect(url)
+
