@@ -8,4 +8,5 @@ urlpatterns = [
     path('favourite/<int:id>', views.FavouriteView, name='favourite'),
     path('wishlist', views.wishlist, name='wishlist'),
     path('wishlist_delete/<int:id>', views.wishlist_delete, name='wishlist_delete'),
+    path('category/<slug:slug>', views.categoryView, name='category'),
 ]

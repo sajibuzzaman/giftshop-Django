@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator
 from giftshopApp.models import Slider
-from .models import Product, Images, Comment, CommentForm, Favourite
+from .models import Category, Product, Images, Comment, CommentForm, Favourite
 
 # Create your views here.
 def shop(request):
@@ -88,3 +88,20 @@ def wishlist_delete(request,id):
     messages.warning(request, 'Your  wishlist product has been deleted.')
     return HttpResponseRedirect(url)
 
+def categoryView(request, slug):
+    slider = Slider.objects.get(default=True)
+
+    category = Category.objects.get(slug=slug)
+    product = Product.objects.filter(category__slug=slug)
+    paginator = Paginator(product, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context={
+        'category' : category,
+        'product' : product,
+        'page_obj' : page_obj,
+        'slider' : slider,
+    }
+
+    return render(request, 'shop/category.html', context)

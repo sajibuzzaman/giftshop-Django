@@ -127,7 +127,7 @@
                                 <ul class="sub-menu">
                                     
                                     {% for c in category %}
-                                    <li><a href="#">{{ c.title }}</a></li> 
+                                    <li><a href="{% url 'category' slug=c.slug %}">{{ c.title }}</a></li> 
                                     {% endfor %}
                                                                         
                                     
