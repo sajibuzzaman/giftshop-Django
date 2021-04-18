@@ -38,6 +38,7 @@ class Product(models.Model):
     compositions = models.CharField(max_length=100, blank=True, null=True)
     Styles = models.CharField(max_length=100, blank=True, null=True)
     Properties = models.CharField(max_length=100, blank=True, null=True)
+    featured = models.BooleanField(default=False)
     slug = models.SlugField(null=True, unique=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -1,8 +1,9 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import redirect, render, HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator
 from giftshopApp.models import Slider
 from .models import Blog, CommentBlog, CommentFormBlog
+from giftshopApp.forms import SearchForm
 
 # Create your views here.
 
@@ -49,3 +50,26 @@ def CommentBlogView(request, id):
             # messages.success(request, 'Your informative Comment has been sent')
             return HttpResponseRedirect(url)
     return HttpResponseRedirect(url)
+
+
+def BlogSearchView(request):
+    latest = Blog.objects.all().order_by('-date_posted')[0:5]
+    slider = Slider.objects.get(default=True)
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            blogs = Blog.objects.filter(title__icontains=query)                       
+            paginator = Paginator(blogs, 6)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+
+            context={
+                'slider' : slider,
+                'latest' : latest,
+                'page_obj': page_obj,           
+            }
+           
+            return render(request, 'blogApp/blog.html', context)
+
+    return redirect('blog')

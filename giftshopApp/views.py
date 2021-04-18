@@ -5,10 +5,13 @@ from .models import Setting, Slider, About, Team, ContactForm, ContactMessage
 from .forms import SearchForm
 from orderApp.models import ShopCart
 from shop.models import Product, Favourite
+from blogApp.models import Blog
 
 # Create your views here.
 def home(request):
     sliders = Slider.objects.all()
+    products = Product.objects.filter(featured=True).order_by('-created_at')
+    blogs = Blog.objects.order_by('-date_posted')[0:3]
     # current_user = request.user
     # cart_products = ShopCart.objects.filter(user_id=current_user.id)
     # total_amount = 0
@@ -17,6 +20,8 @@ def home(request):
 
     context={
         'sliders' : sliders,
+        'products' : products,
+        'blogs' : blogs,
         # 'cart_products' : cart_products,
         # 'total_amount' : total_amount,
     }

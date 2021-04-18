@@ -43,6 +43,17 @@
 
 <!-- Product Section Start-->
 <div class="product-section section pt-120 pb-120">
+
+    <div class="text-center">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}" role="alert">
+            <strong>{{ message }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+    
     <div class="container">
 
         <!-- Product Wrapper Start-->
@@ -86,7 +97,7 @@
                             <!-- Title & Category -->
                             <div class="title-category float-left">
                                 <h5 class="title"><a href="{% url 'product_details' slug=p.slug %}">{{ p.title }}</a></h5>
-                                <a href="shop.html" class="category">{{ p.category }}</a>
+                                <a href="{% url 'category' slug=p.category.slug %}" class="category">{{ p.category }}</a>
                             </div>
                             <!-- Price -->
                             

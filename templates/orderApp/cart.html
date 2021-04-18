@@ -66,13 +66,13 @@
                                 <tr>
                                     <th class="number">#</th>
                                     <th class="image">image</th>
-                                    <th class="name">product name</th>
-                                    <th class="price">product Color</th>
-                                    <th class="qty">quantity</th>
+                                    <th class="price">product name</th>
+                                    <th class="remove">Color</th>
+                                    <th class="remove">quantity</th>
                                     <th class="price">price</th>
                                     <th class="price">Discount price</th>
-                                    <th class="total">totle</th>
-                                    <th class="total">Update</th>
+                                    <th class="price">totle</th>
+                                    <th class="remove">Update</th>
                                     <th class="remove">remove</th>
                                 </tr>
                             </thead>
@@ -107,7 +107,7 @@
                                         
                                     <td><p class="cart-pro-price">tk {{ c.product.discount_price }}</p></td>
                                     <td><p class="cart-price-total">tk {{ c.amount }}</p></td>
-                                    <td><button class="wl-add-cart-btn" type="submit">update cart</button></td>
+                                    <td><button class="wl-add-cart-btn btn-sm" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i></button></td>
                                     <td> <a class="cart-pro-remove" href="{% url 'cart_delete' id=c.id %}"><i class="fa fa-trash-o" onclick="return confirm('Are  you sure delete')"></i></a></td>
                                 </tr>
                             </form>

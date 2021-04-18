@@ -25,6 +25,7 @@ def Add_to_Shoping_cart(request, id):
                 data = ShopCart.objects.filter(
                     product_id=id, user_id=current_user.id)[0]
                 data.quantity += form.cleaned_data['quantity']
+                data.color = form.cleaned_data['color']
                 data.save()
             else:
                 data = ShopCart()
