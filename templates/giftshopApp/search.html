@@ -33,7 +33,7 @@
 
             <!-- Page Title Start -->
             <div class="page-title text-center col">
-                <h1>shop page</h1>
+                <h1>Search Result</h1>
             </div><!-- Page Title End -->
 
         </div>
@@ -60,13 +60,11 @@
                     <div class="image">
                         <!-- Image -->
                         <a href="{% url 'product_details' slug=p.slug %}" class="img"><img src="{{ p.ImageUrl }}" alt="Product"></a>
-                        <!-- Wishlist -->
+                        <!-- Wishlist -->                    
                         
-                        {% for f in favourites  %}
-                        
-                        <a href="{% url 'favourite' id=p.id %}" class="wishlist"><i class="fa fa-heart{%if f.product.id != p.id%}-o{%endif%}"></i></a>
+                        <a href="{% url 'favourite' id=p.id %}" class="wishlist"><i class="fa fa-heart-o"></i></a>
                             
-                        {% endfor %}
+            
                             
                        
                     </div>

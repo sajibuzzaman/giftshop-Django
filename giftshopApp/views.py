@@ -1,7 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponseRedirect
 from django.contrib import messages
+from django.core.paginator import Paginator
 from .models import Setting, Slider, About, Team, ContactForm, ContactMessage
+from .forms import SearchForm
 from orderApp.models import ShopCart
+from shop.models import Product, Favourite
 
 # Create your views here.
 def home(request):
@@ -52,3 +55,23 @@ def contact(request):
       'slider' : slider,
     }
     return render(request,'giftshopApp/contact.html', context)
+
+def SearchView(request):
+    slider = Slider.objects.get(default=True)
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            products = Product.objects.filter(title__icontains=query)                       
+            paginator = Paginator(products, 6)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+
+            context={
+                'slider' : slider,
+                'page_obj': page_obj,           
+            }
+           
+            return render(request, 'giftshopApp/search.html', context)
+
+    return redirect('shop')

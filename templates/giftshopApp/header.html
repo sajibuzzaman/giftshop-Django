@@ -150,9 +150,10 @@
 
                         <!-- Search Form -->
                         <div class="header-search-form">
-                            <form action="#">
-                                <input type="text" placeholder="Search...">
-                                <button><i class="ion-ios-search-strong"></i></button>
+                            <form action="{%url 'SearchView'%}" method="POST">
+                                {% csrf_token %}
+                                <input type="text" placeholder="Enter Your Product Name..." name="query">
+                                <button type="submit"><i class="ion-ios-search-strong"></i></button>
                             </form>
                         </div>
 

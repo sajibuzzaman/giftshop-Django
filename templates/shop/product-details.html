@@ -130,7 +130,11 @@
                                             type="number" name="quantity">
                                             
                         </div>
+                        {% if product.amount == 0 %}
+                        <button class="add-to-cart">Not Available</button>
+                        {% else %}
                         <button class="add-to-cart" type="submit">add to cart</button>
+                        {% endif %}
                     </form>
                 </div>
 
