@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.db.models import Count, Sum, Avg, fields
+from math import floor
 
 # Create your models here.
 class Category(MPTTModel):
@@ -32,6 +33,7 @@ class Product(models.Model):
     image = models.ImageField(blank=True, upload_to='product/')
     new_price = models.DecimalField(decimal_places=2, max_digits=15, default=0)
     amount = models.IntegerField(default=0)
+    discount = models.IntegerField(default=0, blank=True, null=True)
     detail = models.TextField()
     compositions = models.CharField(max_length=100, blank=True, null=True)
     Styles = models.CharField(max_length=100, blank=True, null=True)
@@ -74,6 +76,10 @@ class Product(models.Model):
             cnt = (reviews['count'])
             return cnt
 
+    def discount_price(self):
+       
+        return floor(int(self.new_price)  - ( int(self.new_price) * ( self.discount / 100) ))
+
 class Images(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     title = models.CharField(max_length=200, blank=True)
@@ -114,3 +120,23 @@ class Favourite(models.Model):
 
     def __str__(self):
         return self.product.title
+
+class Color(models.Model):
+    name = models.CharField(max_length=20)
+    code = models.CharField(max_length=10, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    def color_tag(self):
+        if self.code is not None:
+            return mark_safe('<p style="background-color:{}">Color </p>'.format(self.code))
+        else:
+            return ""
+
+class Variants(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    color = models.ForeignKey(Color, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return self.color.name

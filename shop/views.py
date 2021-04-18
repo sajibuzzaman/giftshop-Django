@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import messages
 from django.core.paginator import Paginator
 from giftshopApp.models import Slider
-from .models import Category, Product, Images, Comment, CommentForm, Favourite
+from .models import Category, Product, Images, Comment, CommentForm, Favourite, Variants
 
 # Create your views here.
 def shop(request):
@@ -27,11 +27,13 @@ def product_details(request,slug):
     product = Product.objects.get(slug=slug)
     images = Images.objects.filter(product__slug=slug)
     comments = Comment.objects.filter(product__slug=slug, status='True').order_by('-created_at')
+    colors = Variants.objects.filter(product__slug=slug)
     context={
         'slider' : slider,
         'product' : product,
         'images' : images,
         'comments' : comments,
+        'colors' : colors,
     }
     return render(request, 'shop/product-details.html', context)
 

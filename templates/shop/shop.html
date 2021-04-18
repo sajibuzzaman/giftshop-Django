@@ -62,13 +62,19 @@
                         <a href="{% url 'product_details' slug=p.slug %}" class="img"><img src="{{ p.ImageUrl }}" alt="Product"></a>
                         <!-- Wishlist -->
                         
-                        {% for f in favourites  %}
                         
-                        <a href="{% url 'favourite' id=p.id %}" class="wishlist"><i class="fa fa-heart{%if f.product.id != p.id%}-o{%endif%}"></i></a>
+                        
+                        <a href="{% url 'favourite' id=p.id %}" class="wishlist"><i class="fa fa-heart-o"></i></a>
                             
-                        {% endfor %}
+                        
+                        
+                        {% if p.discount != 0 %}
+                            <span class="label badge badge-success" style="color: white;"><i>Save {{p.discount}}%</i></span> 
+                        {% endif %}
                             
-                       
+                        
+
+   
                     </div>
 
                     <!-- Content -->
@@ -83,11 +89,21 @@
                                 <a href="shop.html" class="category">{{ p.category }}</a>
                             </div>
                             <!-- Price -->
-                            <div class="price float-right">
+                            
+                            {% if p.discount == 0 %}
+                            <div class="price float-right">                                          
                                 <span class="new">tk{{ p.new_price }}</span>
-                                <!-- Old Price Mockup If Need -->
-                                <!-- <span class="old">$46</span> -->
+                             
                             </div>
+                            {% else %}
+                            <div class="price float-right">                                          
+                                <span class="new">tk{{ p.discount_price }}</span>
+                                <!-- Old Price Mockup If Need -->
+                                 <span class="old">tk{{ p.new_price }}</span>
+                            </div>
+                            {% endif %}
+                                
+                        
 
                         </div>
                         

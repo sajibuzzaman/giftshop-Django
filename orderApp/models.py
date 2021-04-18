@@ -1,5 +1,5 @@
 from django.db import models
-from shop.models import Product
+from shop.models import Product, Variants
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
@@ -9,14 +9,15 @@ from django.utils.safestring import mark_safe
 class ShopCart(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    color = models.CharField(max_length=20, null=True, blank=True)
     quantity = models.IntegerField(default=1)
 
     def price(self):
-        return self.product.new_price
+        return self.product.discount_price()
  
     @property
     def amount(self):
-        return self.quantity*self.product.new_price
+        return self.quantity*self.product.discount_price()
 
     def __str__(self):
         return self.product.title
@@ -25,7 +26,7 @@ class ShopingCartForm(ModelForm):
 
     class Meta:
         model = ShopCart
-        fields = ['quantity']
+        fields = ['quantity', 'color']
 
 class Order(models.Model):
     STATUS = (
@@ -78,6 +79,7 @@ class OderProduct(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    color = models.CharField(max_length=20, null=True, blank=True)
     quantity = models.IntegerField()
     price = models.FloatField()
     amount = models.FloatField()

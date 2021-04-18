@@ -48,10 +48,10 @@
         <!-- Product Wrapper Start-->
         <div class="row">
 
-            
+
             {% for p in page_obj %}
-            
-                    <!-- Product Start-->
+
+            <!-- Product Start-->
             <div class="col-lg-4 col-md-6 col-12 mb-60">
 
                 <div class="product">
@@ -59,14 +59,17 @@
                     <!-- Image Wrapper -->
                     <div class="image">
                         <!-- Image -->
-                        <a href="{% url 'product_details' slug=p.slug %}" class="img"><img src="{{ p.ImageUrl }}" alt="Product"></a>
-                        <!-- Wishlist -->                    
-                        
+                        <a href="{% url 'product_details' slug=p.slug %}" class="img"><img src="{{ p.ImageUrl }}"
+                                alt="Product"></a>
+                        <!-- Wishlist -->
+
                         <a href="{% url 'favourite' id=p.id %}" class="wishlist"><i class="fa fa-heart-o"></i></a>
-                            
-            
-                            
-                       
+
+                        {% if p.discount != 0 %}
+                        <span class="label badge badge-success" style="color: white;"><i>Save {{p.discount}}%</i></span>
+                        {% endif %}
+
+
                     </div>
 
                     <!-- Content -->
@@ -77,50 +80,57 @@
 
                             <!-- Title & Category -->
                             <div class="title-category float-left">
-                                <h5 class="title"><a href="{% url 'product_details' slug=p.slug %}">{{ p.title }}</a></h5>
+                                <h5 class="title"><a href="{% url 'product_details' slug=p.slug %}">{{ p.title }}</a>
+                                </h5>
                                 <a href="shop.html" class="category">{{ p.category }}</a>
                             </div>
                             <!-- Price -->
+                            {% if p.discount == 0 %}
                             <div class="price float-right">
                                 <span class="new">tk{{ p.new_price }}</span>
-                                <!-- Old Price Mockup If Need -->
-                                <!-- <span class="old">$46</span> -->
+
                             </div>
+                            {% else %}
+                            <div class="price float-right">
+                                <span class="new">tk{{ p.discount_price }}</span>
+                                <!-- Old Price Mockup If Need -->
+                                <span class="old">tk{{ p.new_price }}</span>
+                            </div>
+                            {% endif %}
 
                         </div>
-                        
+
                         {% if p.amount == 0 %}
                         <div class="action-button fix text-center">
                             <a>Not Available</a>
                         </div>
                         {% else %}
-                              <!-- Action Button -->
+                        <!-- Action Button -->
                         <div class="action-button fix text-center">
                             <a href="{% url 'Add_to_Shoping_cart' id=p.id %}">add to cart</a>
                         </div>
 
                         {% endif %}
-                            
 
-                      
+
+
 
                     </div>
 
                 </div>
 
             </div><!-- Product End-->
-      
+
             {% endfor %}
-                
-        
+
+
 
             <!-- Pagination Start -->
             <div class="pagination col-12 mt-20">
 
                 {% if page_obj.has_previous %}
                 <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
-                <a class="btn btn-outline-info mb-4"
-                    href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
                 {% endif %}
 
                 {% for num in page_obj.paginator.page_range %}

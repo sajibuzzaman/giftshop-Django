@@ -67,8 +67,10 @@
                                     <th class="number">#</th>
                                     <th class="image">image</th>
                                     <th class="name">product name</th>
+                                    <th class="price">product Color</th>
                                     <th class="qty">quantity</th>
                                     <th class="price">price</th>
+                                    <th class="price">Discount price</th>
                                     <th class="total">totle</th>
                                     <th class="total">Update</th>
                                     <th class="remove">remove</th>
@@ -88,12 +90,22 @@
                                     <td><span class="cart-number">{{ forloop.counter }}</span></td>
                                     <td><a href="{% url 'product_details' slug=c.product.slug %}" class="cart-pro-image"><img src="{{ c.product.ImageUrl }}" alt="" /></a></td>
                                     <td><a href="{% url 'product_details' slug=c.product.slug %}" class="cart-pro-title">{{ c.product.title }}</a></td>
+                                    <td><a class="cart-pro-price">{{ c.color }}</a></td>
                                     <td><div class="product-quantity">
                                         <input class="cart-plus-minus-box" value="{{ c.quantity }}"
                                             min="1" max="{{c.product.amount}}"
                                             type="number" name="quantity">
                                     </div></td>
-                                    <td><p class="cart-pro-price">tk {{ c.price }}</p></td>
+                                    
+                                    {% if c.product.discount == 0 %}
+                                    <td><p class="cart-pro-price">tk {{ c.product.new_price }}</p></td>
+
+                                    {% else %}
+                                    <td><p class="cart-pro-price text-danger"><del>tk {{ c.product.new_price }}</del></p></td>
+                                        
+                                    {% endif %}
+                                        
+                                    <td><p class="cart-pro-price">tk {{ c.product.discount_price }}</p></td>
                                     <td><p class="cart-price-total">tk {{ c.amount }}</p></td>
                                     <td><button class="wl-add-cart-btn" type="submit">update cart</button></td>
                                     <td> <a class="cart-pro-remove" href="{% url 'cart_delete' id=c.id %}"><i class="fa fa-trash-o" onclick="return confirm('Are  you sure delete')"></i></a></td>
@@ -112,7 +124,7 @@
                         <!-- Cart Action -->
                         <div class="cart-action col-lg-4 col-md-6 col-12 mb-30">
                             <a href="{% url 'shop' %}" class="button">Continiue Shopping</a>
-                            <button class="button" type="submit">update cart</button>
+                          
                         </div>
                   
                         

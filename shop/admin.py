@@ -1,7 +1,7 @@
 from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin
 import admin_thumbnails
-from .models import Product, Category, Comment, Images, Favourite
+from .models import Product, Category, Comment, Images, Favourite, Variants, Color
 class CategoryAdmin(DraggableMPTTAdmin):
     prepopulated_fields = {'slug': ('title',)}
     mptt_indent_field = "title"
@@ -42,15 +42,21 @@ class productImageInline(admin.TabularInline):
     model = Images
     readonly_fields = ('id',)
     extra = 2
-    
+
+class ProductVariantsInline(admin.TabularInline):
+    model = Variants
+    extra = 1
+    show_change_link = True
+
 @admin_thumbnails.thumbnail('image')    
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['title', 'category', 'updated_at', 'image_tag']
     list_filter = ['title', 'category', 'created_at']
     list_per_page = 10
     search_fields = ['title', 'new_price', 'detail']
-    inlines = [productImageInline]              #for extra image field
+    inlines = [productImageInline, ProductVariantsInline]              #for extra image field
     prepopulated_fields = {'slug': ('title',)}  #for auto generated slug
+
 
 
 class CommentAdmin(admin.ModelAdmin):
@@ -64,3 +70,8 @@ admin.site.register(Category,CategoryAdmin)
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Comment,CommentAdmin)
 admin.site.register(Favourite)
+class ColorAdmin(admin.ModelAdmin):
+    list_display = ['name', 'code', 'color_tag']
+
+
+admin.site.register(Color, ColorAdmin)

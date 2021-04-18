@@ -67,6 +67,7 @@
                                 <th class="name">product name</th>
                                 <th class="qty">stock status</th>
                                 <th class="price">price</th>
+                                <th class="price">Discount price</th>
                                 <th class="total">add to cart</th>
                                 <th class="remove">remove</th>
                             </tr>
@@ -90,8 +91,20 @@
                                     {% endif %}
 
                                 </td>
+                                
+                                {% if f.product.discount == 0 %}
                                 <td>
                                     <p class="cart-pro-price">tk {{ f.product.new_price }}</p>
+                                </td>
+                                {% else %}
+                                <td>
+                                    <p class="cart-pro-price text-danger"><del>tk {{ f.product.new_price }}</del></p>
+                                </td>
+                                {% endif %}
+                                    
+                                
+                                <td>
+                                    <p class="cart-pro-price">tk {{ f.product.discount_price }}</p>
                                 </td>
                                 
                                 {% if f.product.amount == 0 %}

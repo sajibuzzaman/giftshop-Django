@@ -83,7 +83,7 @@
                                
                                 <th class="image">images</th>
                                 <th class="name">Product Title</th>
-
+                                <th class="price">Product Color</th>
                                 <th class="price"> Price</th>
                                 <th class="price">Quantity</th>
                                 <th class="price"> Total Price</th>
@@ -97,6 +97,7 @@
                                 <td ><a href="#" class="cart-pro-image"><img src="{{order_product.product.ImageUrl}}"
                                             alt="{{ p.product.title }}"></a></td>
                                 <td><span class="cart-pro-title">{{order_product.product.title}}</span></td>
+                                <td><span class="cart-pro-price">{{order_product.color}}</span></td>
                                 <td><span class="cart-pro-price">tk {{order_product.price}}</span></td>
                                 <td><span class="cart-pro-price">×{{order_product.quantity}}</span></td>
                                 <td><span class="cart-pro-price">tk {{order_product.amountnow}}</span></td>

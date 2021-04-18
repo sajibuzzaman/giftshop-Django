@@ -30,6 +30,7 @@ def Add_to_Shoping_cart(request, id):
                 data = ShopCart()
                 data.user_id = current_user.id
                 data.product_id = id
+                data.color = form.cleaned_data['color']
                 data.quantity = form.cleaned_data['quantity']
                 data.save()
         messages.success(request, 'Your Product  has been added')
@@ -58,7 +59,8 @@ def cart_details(request):
    
     total_amount = 0
     for p in cart_products:
-        total_amount+=p.product.new_price*p.quantity
+        print(p.product.discount_price())
+        total_amount+=p.product.discount_price()*p.quantity
   
     context={
         'slider' : slider,
@@ -86,6 +88,7 @@ def cart_update(request, id):
             data = cart_products
             data.user_id = current_user.id
             data.product_id = cart_products.product.id
+            data.color = form.cleaned_data['color']
             data.quantity = form.cleaned_data['quantity']
             data.save()
         messages.success(request, 'Your Product  has been Updated')
@@ -97,7 +100,7 @@ def OrderCart(request):
     shoping_cart = ShopCart.objects.filter(user_id=current_user.id)
     totalamount = 0
     for rs in shoping_cart:
-        totalamount += rs.quantity*rs.product.new_price
+        totalamount += rs.quantity*rs.product.discount_price()
     if request.method == "POST":
         form = OderForm(request.POST, request.FILES)
         if form.is_valid():
@@ -124,8 +127,9 @@ def OrderCart(request):
                 data.order_id = dat.id
                 data.product_id = rs.product_id
                 data.user_id = current_user.id
+                data.color = rs.color
                 data.quantity = rs.quantity
-                data.price = rs.product.new_price
+                data.price = rs.product.discount_price()
                 data.amount = rs.amount
                 data.save()
 
@@ -169,7 +173,7 @@ def OrderCart(request):
 def Order_showing(request):
     slider = Slider.objects.get(default=True)
     current_user = request.user
-    orders = Order.objects.filter(user_id=current_user.id)
+    orders = Order.objects.filter(user_id=current_user.id).order_by('-id')
     context = {
         'slider' : slider,
         'orders': orders
@@ -198,7 +202,7 @@ def user_oder_details(request, id):
 def Order_Product_showing(request):
     slider = Slider.objects.get(default=True)
     current_user = request.user
-    order_product = OderProduct.objects.filter(user_id=current_user.id)
+    order_product = OderProduct.objects.filter(user_id=current_user.id).order_by('-id')
     context = {
         'slider' : slider,
         'order_product': order_product

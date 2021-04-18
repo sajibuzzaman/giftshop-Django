@@ -98,50 +98,69 @@
                 </span>
 
                 <!-- Price -->
-                <span class="product-price">tk {{ product.new_price }}</span>
+                
+                {% if product.discount == 0 %}
+                    <span class="product-price">tk {{ product.new_price }}</span>                   
+                {% else %}
+                    <div class="row">
+                        <div class="col-md-4 col-12 mt-10">
+                            <span class="product-price">tk {{ product.discount_price }}</span>
+                        </div>
+                        <div class="col-md-4 col-12 mt-10">
+                            <span class="product-price text-danger"><del>tk {{ product.new_price }}</del></span>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <span class="product-price badge badge-success" style="color: white;"><i>Save {{product.discount}}%</i></span>
+                        </div>
+                    </div>
+                {% endif %}
+                
+                
 
                 <!-- Description -->
                 <div class="description">
                     <p>{{ product.detail|truncatewords:25 }}</p>
                 </div>
 
+                <form action="{% url 'Add_to_Shoping_cart' id=product.id %}" method="POST">
+                    {% csrf_token %}
                 <!-- Color -->
+                
+              
                 <div class="product-color fix">
                     <h5>Select Color</h5>
-                    <form action="#">
-                        <div class="color-box"><input type="radio" name="color" id="color-1"><label for="color-1"
-                                style="background-color: #51bd99;">color 1</label></div>
-                        <div class="color-box"><input type="radio" name="color" id="color-2"><label for="color-2"
-                                style="background-color: #83a931;">color 2</label></div>
-                        <div class="color-box"><input type="radio" name="color" id="color-3"><label for="color-3"
-                                style="background-color: #c8001e;">color 3</label></div>
-                        <div class="color-box"><input type="radio" name="color" id="color-4"><label for="color-4"
-                                style="background-color: #414141;">color 4</label></div>
-                    </form>
-                </div>
-
+                   
+                        <div class="row">
+                        {% for c in colors %}
+                        
+                        <div class="color-box col-md-3"><input value="{{c.color.name}}" type="radio" name="color" id="color-{{c.color.id}}"><label for="color-{{c.color.id}}"
+                            style="background-color: {{c.color.code}}">color {{forloop.counter}}</label></div>
+                   
+                        {% endfor %}
+                            
+                    </div>
+                </div>                   
+               
                 <!-- Quantity & Cart Button -->
                 <div class="product-quantity-cart fix">
-                    <form action="{% url 'Add_to_Shoping_cart' id=product.id %}" method="POST">
-                        {% csrf_token %}
+                    
                         <div class="product-quantity">
-                            <input class="cart-plus-minus-box" value="1"
-                                            min="1" max="{{product.amount}}"
-                                            type="number" name="quantity">
-                                            
+                            <input class="cart-plus-minus-box" value="1" min="1" max="{{product.amount}}" type="number"
+                                name="quantity">
+
                         </div>
                         {% if product.amount == 0 %}
                         <button class="add-to-cart">Not Available</button>
                         {% else %}
                         <button class="add-to-cart" type="submit">add to cart</button>
                         {% endif %}
-                    </form>
+                    
                 </div>
-
+            </form>
                 <!-- Action Button -->
                 <div class="product-action-button fix">
 
-                    <button><i class="ion-ios-heart-outline"></i>Wishlist</button>
+                    <button><a href="{% url 'favourite' id=product.id %}"><i class="ion-ios-heart-outline"></i>Wishlist</a></button>
 
                 </div>
 
