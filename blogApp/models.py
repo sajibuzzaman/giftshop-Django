@@ -2,6 +2,8 @@ from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.forms import ModelForm
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
+
 
 
 # Create your models here.
@@ -14,6 +16,10 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def image_tag(self):
+        return mark_safe('<img src="{}" heights="70" width="60" />'.format(self.image.url))
+    image_tag.short_description = 'Image'
 
 class CommentBlog(models.Model):
     STATUS = (
@@ -29,6 +35,8 @@ class CommentBlog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return 'Comment'
 
 class CommentFormBlog(ModelForm):
     class Meta:

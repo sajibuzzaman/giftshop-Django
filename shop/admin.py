@@ -38,23 +38,28 @@ class CategoryAdmin(DraggableMPTTAdmin):
 
 #for add extra image in Product
 @admin_thumbnails.thumbnail('image')
-class productImageInline(admin.TabularInline):
+class productImageInline(admin.StackedInline):
     model = Images
     readonly_fields = ('id',)
-    extra = 2
+    extra = 0
 
-class ProductVariantsInline(admin.TabularInline):
+class ProductVariantsInline(admin.StackedInline):
     model = Variants
-    extra = 1
+    extra = 0
     show_change_link = True
 
 @admin_thumbnails.thumbnail('image')    
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'updated_at', 'image_tag']
-    list_filter = ['title', 'category', 'created_at']
+    list_display = ['title', 'category', 'amount', 'discount', 'featured','image_tag']
+    list_editable = ['amount', 'discount', 'featured']
+    fieldsets = [
+        ('Product Details' , {'fields': ['title', 'category', 'keywords','new_price', 'amount', 'discount', 'detail', 'image', 'featured', 'slug']}),
+        ('Extar Feature' , {'fields': ['compositions', 'Styles', 'Properties'], 'classes': ['collapse']}),
+    ]
+    list_filter = ['category', 'created_at']
     list_per_page = 10
     search_fields = ['title', 'new_price', 'detail']
-    inlines = [productImageInline, ProductVariantsInline]              #for extra image field
+    inlines = [productImageInline, ProductVariantsInline]          #for extra image field
     prepopulated_fields = {'slug': ('title',)}  #for auto generated slug
 
 
@@ -63,13 +68,16 @@ class CommentAdmin(admin.ModelAdmin):
     readonly_fields = ['product','user', 'comment','rate', 'ip']
     list_display = ['product', 'status', 'created_at', 'updated_at', 'user']
     list_filter = ['status', 'created_at']
+    fieldsets = [
+        ('Comments Details' , {'fields': ['user', 'product', 'comment', 'rate', 'status']}),
+    ]
     list_per_page = 10
 
 # Register your models here.
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Product,ProductAdmin)
 admin.site.register(Comment,CommentAdmin)
-admin.site.register(Favourite)
+# admin.site.register(Favourite)
 class ColorAdmin(admin.ModelAdmin):
     list_display = ['name', 'code', 'color_tag']
 

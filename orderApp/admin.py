@@ -16,9 +16,13 @@ class OrderProductline(admin.TabularInline):
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'last_name',
                     'phone', 'total', 'status', 'transaction_id']
-    list_filter = ['status']
+    list_filter = ['status', 'user']
     readonly_fields = ('user', 'first_name', 'last_name',
                        'phone', 'address', 'city', 'country', 'total', 'code', 'ip', 'transaction_id', 'image_tag')
+    fieldsets = [
+        ('Admin Section' , {'fields': ['status', 'adminnote']}),
+        ('Client Details' , {'fields': ['user', 'first_name', 'last_name', 'phone', 'address', 'city', 'country', 'total',  'code', 'transaction_id', 'image_tag', ], 'classes': ['collapse']})
+    ]
     can_delete = False
     inlines = [OrderProductline]
 

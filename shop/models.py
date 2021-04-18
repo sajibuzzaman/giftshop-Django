@@ -33,7 +33,7 @@ class Product(models.Model):
     image = models.ImageField(blank=True, upload_to='product/')
     new_price = models.DecimalField(decimal_places=2, max_digits=15, default=0)
     amount = models.IntegerField(default=0)
-    discount = models.IntegerField(default=0, blank=True, null=True)
+    discount = models.IntegerField(default=0)
     detail = models.TextField()
     compositions = models.CharField(max_length=100, blank=True, null=True)
     Styles = models.CharField(max_length=100, blank=True, null=True)
@@ -86,7 +86,7 @@ class Images(models.Model):
     title = models.CharField(max_length=200, blank=True)
     image = models.ImageField(blank=True, upload_to='product/')
 
-    def __str(self):
+    def __str__(self):
         return self.title
 
 
@@ -106,6 +106,8 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return 'Comment'
 
 class CommentForm(ModelForm):
     class Meta:

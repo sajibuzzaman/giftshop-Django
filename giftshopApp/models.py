@@ -1,6 +1,8 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.forms import ModelForm
+from django.utils.safestring import mark_safe
+
 
 # Create your models here.
 class Setting(models.Model):
@@ -15,7 +17,7 @@ class Setting(models.Model):
     phone = models.IntegerField()
     fax = models.CharField(blank=True, max_length=50)
     email = models.EmailField(blank=True, null=True, max_length=50)
-    smptserver = models.CharField(max_length=100)
+    smptserver = models.CharField(blank=True, max_length=100)
     smtpemail = models.EmailField(blank=True, null=True, max_length=50)
     smptpassword = models.CharField(blank=True, max_length=50)
     smptport = models.CharField(blank=True, max_length=100)
@@ -35,6 +37,10 @@ class Setting(models.Model):
     def __str__(self):
         return self.title
 
+    def image_tag(self):
+        return mark_safe('<img src="{}" heights="70" width="60" />'.format(self.logo.url))
+    image_tag.short_description = 'Logo'
+
 class Slider(models.Model):
     title = models.CharField(max_length=200)
     description = RichTextUploadingField()
@@ -44,6 +50,9 @@ class Slider(models.Model):
     def __str__(self):
         return self.title
 
+    def image_tag(self):
+        return mark_safe('<img src="{}" heights="70" width="60" />'.format(self.image.url))
+    image_tag.short_description = 'Image'
 class About(models.Model):
     STATUS = (
         ('True', 'True'),
@@ -69,6 +78,10 @@ class Team(models.Model):
 
     def __str__(self):
        return self.name
+
+    def image_tag(self):
+        return mark_safe('<img src="{}" heights="70" width="60" />'.format(self.picture.url))
+    image_tag.short_description = 'Picture'
 
 class ContactMessage(models.Model):
     STATUS = (
