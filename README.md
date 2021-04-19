@@ -1,7 +1,7 @@
 # giftshop-Django
 This is Ecommerce website. Here I mainly focused in buy gift. Also here a Blog site that helps to marketing in our product.
 
-tested **3.8.5**
+tested **python3.8.5**
 
 ## Feature
 **fisrt:** Shop & Blog & UserAuth
