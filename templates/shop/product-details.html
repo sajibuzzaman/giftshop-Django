@@ -41,7 +41,7 @@
 
 
 <!-- Product Section Start-->
-<div class="product-section section pt-110 pb-90">
+<div class="product-section section pt-110 pb-90" id="{{product.id}}">
     <div class="text-center">
         {% if messages %}
         {% for message in messages %}
@@ -122,7 +122,7 @@
                     <p>{{ product.detail|truncatewords:25 }}</p>
                 </div>
 
-                <form action="{% url 'Add_to_Shoping_cart' id=product.id %}" method="POST">
+                <form action="{% url 'Add_to_Shoping_cart' id=product.id %}#{{product.id}}" method="POST">
                     {% csrf_token %}
                 <!-- Color -->
                 

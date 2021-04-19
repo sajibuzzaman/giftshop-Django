@@ -26,7 +26,7 @@
 
                 {% for p in products  %}
                 <!-- Product Start-->
-                <div class="col-lg-4 col-md-6 col-12 mb-60">
+                <div class="col-lg-4 col-md-6 col-12 mb-60" id="{{p.id}}">
 
                     <div class="product">
 
@@ -81,7 +81,7 @@
                             {% else %}
 
                             <div class="action-button fix text-center">
-                                <a href="{% url 'Add_to_Shoping_cart' id=p.id %}">add to cart</a>
+                                <a href="{% url 'Add_to_Shoping_cart' id=p.id %}#{{p.id}}">add to cart</a>
                             </div>
 
                             {% endif %}

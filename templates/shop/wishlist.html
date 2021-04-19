@@ -42,7 +42,7 @@
 
 
 <!-- Wishlist Section Start-->
-<div class="wishlist-section section pt-120 pb-90">
+<div class="wishlist-section section pt-120 pb-90" id="wishlist">
     <div class="text-center">
         {% if messages %}
         {% for message in messages %}
@@ -113,12 +113,12 @@
                                 </td>
                                 {% else %}
                                 <td><button class="wl-add-cart-btn"><a
-                                    href="{% url 'Add_to_Shoping_cart' id=f.product.id %}">add to cart </a> </button>
+                                    href="{% url 'Add_to_Shoping_cart' id=f.product.id %}#wishlist">add to cart </a> </button>
                                 </td>
                                 {% endif %}
                                     
                                
-                                <td><a class="cart-pro-remove" href="{% url 'wishlist_delete' id=f.id %}"><i
+                                <td><a class="cart-pro-remove" href="{% url 'wishlist_delete' id=f.id %}#wishlist"><i
                                             class="fa fa-trash-o"></i></a></td>
                             </tr>
                             {% endfor %}

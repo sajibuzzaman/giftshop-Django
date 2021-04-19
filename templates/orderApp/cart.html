@@ -42,7 +42,7 @@
     
        
     <!-- Cart Section Start-->
-    <div class="cart-section section pt-120 pb-90">
+    <div class="cart-section section pt-120 pb-90" id='cart'>
 
         <div class="text-center">
             {% if messages %}
@@ -84,7 +84,7 @@
                                     
                                 
                                 {% for c in cart_products %}
-                                <form action="{% url 'cart_update' id=c.id %}" method="post">
+                                <form action="{% url 'cart_update' id=c.id %}#cart" method="post">
                                 {% csrf_token %}
                                 <tr>
                                     <td><span class="cart-number">{{ forloop.counter }}</span></td>
@@ -108,7 +108,7 @@
                                     <td><p class="cart-pro-price">tk {{ c.product.discount_price }}</p></td>
                                     <td><p class="cart-price-total">tk {{ c.amount }}</p></td>
                                     <td><button class="wl-add-cart-btn btn-sm" type="submit"><i class="fa fa-refresh" aria-hidden="true"></i></button></td>
-                                    <td> <a class="cart-pro-remove" href="{% url 'cart_delete' id=c.id %}"><i class="fa fa-trash-o" onclick="return confirm('Are  you sure delete')"></i></a></td>
+                                    <td> <a class="cart-pro-remove" href="{% url 'cart_delete' id=c.id %}#cart"><i class="fa fa-trash-o" onclick="return confirm('Are  you sure delete')"></i></a></td>
                                 </tr>
                             </form>
                                 {% endfor %}
